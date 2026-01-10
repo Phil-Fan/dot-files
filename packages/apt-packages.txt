@@ -1,0 +1,54 @@
+# Ubuntu/Debian APT 包清单
+# 使用: sudo xargs -a apt-packages.txt apt install -y
+
+# === 开发工具 ===
+git
+git-lfs
+gh
+golang-go
+nodejs
+npm
+ruby-dev
+rubygems
+
+# === 命令行工具 ===
+vim
+tmux
+curl
+wget
+fzf
+fd-find
+ripgrep
+tree
+autojump
+
+# === 系统工具 ===
+htop
+btop
+neofetch
+build-essential
+cmake
+make
+
+# === 网络工具 ===
+net-tools
+iputils-ping
+traceroute
+nmap
+openssh-client
+openssh-server
+
+# === NVIDIA 相关 ===
+# nvidia-driver-535
+# nvidia-cuda-toolkit
+
+# === 容器 ===
+# docker.io
+# docker-compose
+# podman
+
+# === 其他 ===
+zip
+unzip
+p7zip-full
+jq

@@ -15,10 +15,15 @@ export ZSH_CONFIG_DIR="$HOME/.zsh_config"
 # 1. 环境变量（必须最先加载）
 source "$ZSH_CONFIG_DIR/environment.zsh"
 
-# 2. Oh My Zsh（核心框架）
+# 2. Oh My Zsh 自定义插件（在加载 Oh My Zsh 之前）
+if [ -f "$ZSH_CONFIG_DIR/oh-my-zsh-custom-plugins.zsh" ]; then
+    source "$ZSH_CONFIG_DIR/oh-my-zsh-custom-plugins.zsh"
+fi
+
+# 3. Oh My Zsh（核心框架）
 source "$ZSH_CONFIG_DIR/oh-my-zsh.zsh"
 
-# 3. 版本管理器（fnm, rbenv, jenv 等）
+# 4. 版本管理器（fnm, rbenv, jenv 等）
 source "$ZSH_CONFIG_DIR/version-managers.zsh"
 
 # 4. Conda（Python 环境）

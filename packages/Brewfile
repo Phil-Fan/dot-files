@@ -42,13 +42,11 @@ brew "uv"              # Python 包管理器
 # ===== 容器和云 =====
 brew "podman"          # 容器管理
 brew "kind"            # Kubernetes in Docker
-brew "mosquitto"       # MQTT 消息代理
 brew "redis"           # 缓存数据库
 
 # ===== 文档和媒体 =====
 brew "pandoc"          # 文档转换工具
 brew "ffmpeg"          # 视频处理
-brew "markdownlint-cli" # Markdown 检查
 
 # ===== AI 和自动化 =====
 brew "gemini-cli"      # Google Gemini CLI
@@ -56,9 +54,6 @@ brew "opencode"        # 代码工具
 
 # ===== Dotfiles 管理 =====
 brew "chezmoi"         # Dotfiles 管理工具
-
-# ===== Java =====
-brew "openjdk@17"
 
 # ===== Tap 仓库 =====
 tap "homebrew/cask-fonts"

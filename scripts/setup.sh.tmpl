@@ -42,7 +42,22 @@ fi
 
 echo ""
 
-# 2. 根据操作系统安装软件
+# 2. 安装 Oh My Zsh 自定义插件
+echo -e "${YELLOW}🔌 安装 Oh My Zsh 自定义插件...${NC}"
+echo -e "${BLUE}这将安装以下插件:${NC}"
+echo -e "  - zsh-autosuggestions (命令自动建议)"
+echo -e "  - zsh-syntax-highlighting (语法高亮)"
+echo -e "  - powerlevel10k (主题)"
+echo ""
+read -p "$(echo -e ${YELLOW}是否安装? [Y/n]: ${NC})" -n 1 -r
+echo ""
+if [[ ! $REPLY =~ ^[Nn]$ ]]; then
+    "{{ .chezmoi.sourceDir }}/scripts/install-oh-my-zsh-plugins.sh.tmpl"
+fi
+
+echo ""
+
+# 3. 根据操作系统安装软件
 {{ if eq .chezmoi.os "darwin" }}
 echo -e "${YELLOW}🍺 安装 macOS 软件包...${NC}"
 read -p "$(echo -e ${YELLOW}是否安装 Homebrew 软件包? [y/N]: ${NC})" -n 1 -r

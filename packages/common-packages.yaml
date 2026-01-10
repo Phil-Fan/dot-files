@@ -1,0 +1,129 @@
+# =============================================================================
+# 多平台包管理配置
+# =============================================================================
+# 这个文件定义了所有平台的软件包，按类别和平台分组
+# =============================================================================
+
+# 包分��定义
+categories:
+  # 开发工具
+  development:
+    description: "开发工具和编程语言"
+    
+    # macOS 包 (Homebrew)
+    macos:
+      brews:
+        - name: git
+          description: "版本控制系统"
+        - name: git-lfs
+          description: "Git 大文件存储"
+        - name: gh
+          description: "GitHub CLI"
+        - name: go
+          description: "Go 语言"
+        - name: fnm
+          description: "Fast Node Manager"
+        - name: rbenv
+          description: "Ruby 版本管理"
+        - name: jenv
+          description: "Java 版本管理"
+    
+    # Linux 包 (apt)
+    linux:
+      apt:
+        - name: git
+          description: "版本控制系统"
+        - name: git-lfs
+          description: "Git 大文件存储"
+        - name: gh
+          description: "GitHub CLI"
+        - name: golang-go
+          description: "Go 语言"
+        - name: nodejs
+          description: "Node.js"
+        - name: ruby-dev
+          description: "Ruby 开发"
+    
+    # 通用包 (两者都有)
+    common:
+      macos:
+        brews: [vim, tmux, curl, wget]
+      linux:
+        apt: [vim, tmux, curl, wget]
+
+  # 命令行工具
+  cli_tools:
+    description: "命令行增强工具"
+    
+    macos:
+      brews:
+        - fzf          # 模糊查找
+        - fd           # 更好的 find
+        - ripgrep      # 更好的 grep
+        - tree         # 目录树
+        - thefuck      # 命令纠错
+        - autojump     # 智能跳转
+    
+    linux:
+      apt:
+        - fzf
+        - fd-find
+        - ripgrep
+        - tree
+        - autojump
+
+  # 系统工具
+  system:
+    description: "系统级工具和监控"
+    
+    macos:
+      brews: [htop, btop, neofetch]
+    
+    linux:
+      apt:
+        - htop
+        - btop
+        - neofetch
+        - net-tools
+        - nvidia-driver-535  # NVIDIA 驱动
+        - nvidia-cuda-toolkit # CUDA 工具包
+
+  # 网络工具
+  network:
+    description: "网络诊断和管理工具"
+    
+    macos:
+      brews: [curl, wget, openssh, nmap]
+    
+    linux:
+      apt:
+        - curl
+        - wget
+        - openssh-client
+        - nmap
+        - net-tools
+        - iputils-ping
+
+  # 容器和虚拟化
+  containers:
+    description: "容器和虚拟化工具"
+    
+    macos:
+      brews: [podman, docker, docker-compose, kind]
+    
+    linux:
+      apt:
+        - podman
+        - docker.io
+        - docker-compose
+        - kubelet
+
+# 特殊标记的包（可选依赖）
+optional:
+  gui_apps:
+    description: "GUI 应用程序 (仅 macOS)"
+    macos:
+      casks:
+        - visual-studio-code
+        - google-chrome
+        - postman

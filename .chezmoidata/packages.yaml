@@ -1,23 +1,55 @@
-# 包管理清单
-# 用于不同操作系统的软件包声明
+# 包管理配置数据
+# 用于 chezmoi 模板中的包管理逻辑
 
 packages:
-  # macOS 包
-  darwin:
-    brews:
-      - git
+  # 通用开发工具（跨平台）
+  common:
+    - git
+    - vim
+    - tmux
+    - curl
+    - wget
+    - fzf
+    - tree
+    - htop
+  
+  # macOS 特定包
+  macos:
+    core:
       - fnm
       - rbenv
       - jenv
+      - gh
+      - go
     casks:
       - visual-studio-code
       - google-chrome
   
-  # Linux 包 (Ubuntu/Debian)
+  # Linux 特定包
   linux:
-    apt:
-      - git
-      - vim
-      - tmux
-      - curl
-      - wget
+    core:
+      - nodejs
+      - ruby-dev
+      - golang-go
+      - build-essential
+    nvidia:
+      - nvidia-driver-535
+      - nvidia-cuda-toolkit
+    network:
+      - net-tools
+      - iputils-ping
+      - nmap
+
+# 包管理器配置
+managers:
+  macos:
+    command: "brew"
+    install: "brew install"
+    update: "brew upgrade"
+    file: "Brewfile"
+  
+  linux:
+    command: "apt"
+    install: "sudo apt install -y"
+    update: "sudo apt update && sudo apt upgrade -y"
+    file: "apt-packages.txt"

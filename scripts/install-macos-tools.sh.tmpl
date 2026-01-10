@@ -33,7 +33,7 @@ if ! command -v brew &> /dev/null; then
     fi
     echo -e "${GREEN}✅ Homebrew 安装完成${NC}"
 else
-    echo -e "${GREEN}✅ Homebrew 已安装: $(brew --version)${NC}"
+    echo -e "${GREEN}✅ Homebrew 已安装: $(brew --version | head -1)${NC}"
 fi
 
 echo ""
@@ -47,15 +47,10 @@ echo ""
 
 # 3. 从 Brewfile 安装软件包
 echo -e "${YELLOW}📦 从 Brewfile 安装软件包...${NC}"
-BREWFILE_PATH="{{ .chezmoi.sourceDir }}/Brewfile"
+BREWFILE_PATH="{{ .chezmoi.sourceDir }}/packages/Brewfile"
 
 if [ -f "$BREWFILE_PATH" ]; then
-    echo -e "${BLUE}正在安装以下软件包:${NC}"
-    echo ""
-    
-    # 显示即将安装的软件包
-    grep -E '^brew |^cask ' "$BREWFILE_PATH" | head -20
-    echo "   ..."
+    echo -e "${BLUE}正在安装软件包...${NC}"
     echo ""
     
     if brew bundle --file="$BREWFILE_PATH"; then
