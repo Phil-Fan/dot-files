@@ -1,0 +1,31 @@
+{{ if eq .chezmoi.os "darwin" -}}
+#!/bin/bash
+# chezmoi:template
+# chezmoi:executable
+
+set -e
+
+echo "🍺 检查 Homebrew 安装状态..."
+
+# 检查 Homebrew 是否已安装
+if ! command -v brew &> /dev/null; then
+    echo "📦 安装 Homebrew..."
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    
+    # 根据架构设置 PATH
+    if [[ $(uname -m) == 'arm64' ]]; then
+        echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> ~/.zprofile
+        eval "$(/opt/homebrew/bin/brew shellenv)"
+    else
+        echo 'eval "$(/usr/local/bin/brew shellenv)"' >> ~/.zprofile
+        eval "$(/usr/local/bin/brew shellenv)"
+    fi
+else
+    echo "✅ Homebrew 已安装"
+fi
+
+echo "📦 从 Brewfile 安装软件包..."
+brew bundle --file={{ .chezmoi.sourceDir }}/Brewfile
+
+echo "✅ Homebrew 软件包安装完成！"
+{{ end -}}

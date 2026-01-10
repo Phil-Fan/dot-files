@@ -1,0 +1,23 @@
+# 包管理清单
+# 用于不同操作系统的软件包声明
+
+packages:
+  # macOS 包
+  darwin:
+    brews:
+      - git
+      - fnm
+      - rbenv
+      - jenv
+    casks:
+      - visual-studio-code
+      - google-chrome
+  
+  # Linux 包 (Ubuntu/Debian)
+  linux:
+    apt:
+      - git
+      - vim
+      - tmux
+      - curl
+      - wget
