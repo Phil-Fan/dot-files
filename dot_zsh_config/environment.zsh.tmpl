@@ -1,0 +1,12 @@
+# 环境变量配置模块
+# 文件: ~/.zsh_config/environment.zsh
+
+# 用户信息
+export DEFAULT_USER="{{ .name }}"
+
+# 通用 PATH
+export PATH="$HOME/.local/bin:$PATH"
+
+# 编辑器配置
+export EDITOR="${EDITOR:-vi}"
+export VISUAL="${VISUAL:-vi}"

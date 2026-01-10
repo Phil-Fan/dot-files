@@ -1,0 +1,33 @@
+# 版本管理器配置模块
+# 文件: ~/.zsh_config/version-managers.zsh
+
+{{ if eq .chezmoi.os "darwin" }}
+
+# ========== macOS 版本管理器 ==========
+
+# fnm (Fast Node Manager)
+FNM_PATH="{{ .macOS.homebrewPath }}/../opt/fnm/bin"
+if [ -d "$FNM_PATH" ]; then
+  eval "`fnm env`"
+fi
+
+{{ else }}
+
+# ========== Linux 版本管理器 ==========
+# 在这里添加 Linux 特定的版本管理器配置
+
+{{ end }}
+
+# ========== 通用版本管理器 (跨平台) ==========
+
+# Ruby (rbenv)
+if [ -d "$HOME/.rbenv" ]; then
+    export PATH="$HOME/.rbenv/shims:$PATH"
+    eval "$(rbenv init - zsh)"
+fi
+
+# Java (jenv)
+if [ -d "$HOME/.jenv" ]; then
+    export PATH="$HOME/.jenv/bin:$PATH"
+    eval "$(jenv init -)"
+fi

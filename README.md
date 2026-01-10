@@ -7,6 +7,7 @@
 - [功能特性](#功能特性)
 - [快速开始](#快速开始)
 - [项目结构](#项目结构)
+- [模块化配置](#模块化配置)
 - [日常使用](#日常使用)
 - [多环境配置](#多环境配置)
 - [故障排除](#故障排除)
@@ -14,6 +15,7 @@
 ## ✨ 功能特性
 
 - ✅ **多平台支持**: macOS 和 Linux 差异化配置
+- ✅ **模块化配置**: Zsh 配置分离为独立模块，易于维护
 - ✅ **模板系统**: 使用 Go 模板语法实现条件配置
 - ✅ **版本控制**: Git 管理，安全可追溯
 - ✅ **自动化**: 一键安装软件包和配置
@@ -35,7 +37,7 @@ brew install chezmoi
 curl -fsSL https://chezmoi.io/get | sh
 ```
 
-#### 2. 初始化配置
+#### 2. 克隆并初始化
 
 ```bash
 # 克隆仓库并初始化 chezmoi
@@ -45,52 +47,120 @@ chezmoi init https://github.com/Phil-Fan/dot-files.git
 chezmoi apply
 ```
 
-#### 3. 重新加载 Shell
+#### 3. 安装软件包（macOS）
 
 ```bash
+# 运行快速设置脚本
+~/.local/share/chezmoi/scripts/setup.sh
+
+# 或者单独运行工具安装脚本
+~/.local/share/chezmoi/scripts/install-macos-tools.sh
+```
+
+#### 4. 重新加载 Shell
+
+```bash
+exec zsh
+# 或
 source ~/.zshrc
 ```
 
-### 从零开始安装（包括软件包）
+### 从零开始完整安装
 
 ```bash
-# 完整安装流程
-chezmoi init https://github.com/Phil-Fan/dot-files.git
-chezmoi apply
+# 1. 安装 chezmoi
+brew install chezmoi
 
-# 运行一次性脚本（安装 Homebrew 软件包）
-chezmoi run run_once_install-brewfile.sh.tmpl
+# 2. 初始化仓库
+chezmoi init https://github.com/Phil-Fan/dot-files.git
+
+# 3. 运行快速设置脚本（会自动应用配置并安装软件）
+~/.local/share/chezmoi/scripts/setup.sh
+
+# 4. 重新加载 Shell
+exec zsh
 ```
 
 ## 📁 项目结构
 
 ```
 dot-files/
-├── .chezmoi.toml.template          # chezmoi 配置模板
 ├── .chezmoitemplates/              # 共享模板目录
 │   └── common/
 │       └── shell-header.zsh       # Shell 通用头部
 ├── .chezmoidata/                   # 数据文件目录
 │   └── packages.yaml               # 包管理清单
-├── dot_zshrc.tmpl                  # Zsh 配置模板
-├── dot_zprofile.tmpl               # Zsh Profile 模板
+├── dot_zsh_config/                 # Zsh 模块化配置目录
+│   ├── oh-my-zsh.zsh.tmpl          # Oh My Zsh 配置
+│   ├── environment.zsh.tmpl        # 环境变量
+│   ├── aliases.zsh.tmpl            # 别名定义
+│   ├── version-managers.zsh.tmpl   # 版本管理器
+│   ├── macos.zsh.tmpl              # macOS 特定配置
+│   ├── conda.zsh.tmpl              # Conda 配置
+│   ├── bun.zsh.tmpl                # Bun 配置
+│   ├── autojump.zsh.tmpl           # Autojump 配置
+│   ├── antigravity.zsh.tmpl        # Antigravity 配置
+│   └── envtools.zsh.tmpl           # 环境信息显示
+├── dot_zshrc.tmpl                  # 主 Zsh 配置（加载模块）
+├── dot_zprofile.tmpl               # Zsh Profile
 ├── dot_p10k.zsh                    # Powerlevel10k 配置
 ├── dot_gitconfig.tmpl              # Git 配置模板
 ├── dot_condarc                     # Conda 配置
 ├── Brewfile                        # Homebrew 包清单
-├── run_once_install-brewfile.sh.tmpl  # Homebrew 安装脚本
+├── scripts/                        # 脚本目录
+│   ├── setup.sh.tmpl               # 快速设置脚本
+│   └── install-macos-tools.sh.tmpl # macOS 工具安装脚本
 └── README.md                       # 本文档
 ```
 
-### 文件说明
+## 🔧 模块化配置
 
-| 文件 | 说明 |
-|------|------|
-| `dot_*.tmpl` | chezmoi 模板文件，会被渲染为 `~/.文件名` |
-| `Brewfile` | Homebrew Bundle 配置，声明式管理 macOS 软件包 |
-| `.chezmoitemplates/` | 可复用的模板片段 |
-| `.chezmoidata/` | 模板数据文件 |
-| `run_once_*.tmpl` | 仅运行一次的脚本 |
+本项目采用模块化的 Zsh 配置结构，将不同功能的配置分离到独立文件中：
+
+### 配置模块说明
+
+| 模块 | 文件 | 说明 |
+|------|------|------|
+| Oh My Zsh | `oh-my-zsh.zsh` | Oh My Zsh 框架和插件配置 |
+| 环境变量 | `environment.zsh` | 基础环境变量和 PATH |
+| 别名 | `aliases.zsh` | 命令别名定义 |
+| 版本管理器 | `version-managers.zsh` | fnm, rbenv, jenv 等 |
+| Conda | `conda.zsh` | Python Conda 环境 |
+| Autojump | `autojump.zsh` | 智能目录跳转工具 |
+| Bun | `bun.zsh` | JavaScript 运行时 |
+| Antigravity | `antigravity.zsh` | 开发工具配置 |
+| macOS | `macos.zsh` | macOS 特定配置 |
+| EnvTools | `envtools.zsh` | Shell 信息显示 |
+
+### 加载顺序
+
+主 `~/.zshrc` 按以下顺序加载模块：
+
+1. `environment.zsh` - 环境变量（最先）
+2. `oh-my-zsh.zsh` - Oh My Zsh 框架
+3. `version-managers.zsh` - 版本管理器
+4. `conda.zsh` - Python 环境
+5. `autojump.zsh` - 目录跳转
+6. `bun.zsh` - JavaScript 运行时
+7. `antigravity.zsh` - 开发工具
+8. 平台特定配置 (`macos.zsh` 或 `linux.zsh`)
+9. `aliases.zsh` - 别名定义
+10. `envtools.zsh` - 信息显示（最后）
+
+### 修改配置
+
+要修改特定功能的配置，编辑对应的模块文件：
+
+```bash
+# 编辑别名
+chezmoi edit ~/.zsh_config/aliases.zsh
+
+# 编辑 macOS 配置
+chezmoi edit ~/.zsh_config/macos.zsh
+
+# 编辑环境变量
+chezmoi edit ~/.zsh_config/environment.zsh
+```
 
 ## 📖 日常使用
 
@@ -110,20 +180,20 @@ chezmoi unmanaged
 ### 编辑配置
 
 ```bash
-# 编辑配置文件（会自动打开源文件）
+# 编辑主配置文件
 chezmoi edit ~/.zshrc
+
+# 编辑配置模块
+chezmoi edit ~/.zsh_config/macos.zsh
 
 # 编辑后自动应用
 chezmoi edit --apply ~/.zshrc
-
-# 编辑 chezmoi 配置
-chezmoi edit-config
 ```
 
 ### 添加新配置
 
 ```bash
-# 添加文件
+# 添加新文件
 chezmoi add ~/.vimrc
 
 # 添加为模板
@@ -215,20 +285,53 @@ export HTTP_PROXY="{{ .macOS.proxyUrl }}"
 {{ end }}
 ```
 
-### 可用变量
+## 🛠️ 自动化脚本
 
-| 变量 | 说明 |
-|------|------|
-| `{{ .chezmoi.os }}` | 操作系统 (darwin/linux/windows) |
-| `{{ .chezmoi.arch }}` | 架构 (arm64/amd64) |
-| `{{ .chezmoi.hostname }}` | 主机名 |
-| `{{ .chezmoi.home }}` | 家目录路径 |
-| `{{ .name }}` | 用户名（自定义） |
-| `{{ .email }}` | 邮箱（自定义） |
+### 快速设置脚本
+
+`scripts/setup.sh` - 一键设置整个开发环境：
+
+```bash
+~/.local/share/chezmoi/scripts/setup.sh
+```
+
+功能：
+- 应用所有 chezmoi 配置
+- 可选安装 Homebrew 软件包
+
+### macOS 工具安装脚本
+
+`scripts/install-macos-tools.sh` - 自动安装 macOS 开发工具：
+
+```bash
+~/.local/share/chezmoi/scripts/install-macos-tools.sh
+```
+
+功能：
+- 检查并安装 Homebrew
+- 更新 Homebrew
+- 从 Brewfile 安装所有软件包
+- 清理旧版本
 
 ## 🔍 故障排除
 
-### 问题 1: 模板不生效
+### 问题 1: 模块未加载
+
+**症状**: 修改模块后没有看到变化
+
+**解决**:
+```bash
+# 检查模块是否存在
+ls -la ~/.zsh_config/
+
+# 重新加载 Shell
+source ~/.zshrc
+
+# 检查模块是否被正确加载
+echo $ZSH_CONFIG_DIR
+```
+
+### 问题 2: 模板不生效
 
 **症状**: 修改模板后没有看到变化
 
@@ -239,16 +342,6 @@ chezmoi status
 
 # 确保文件有 .tmpl 后缀
 chezmoi chattr +template ~/.zshrc
-```
-
-### 问题 2: 权限错误
-
-**症状**: SSH 等敏感文件权限问题
-
-**解决**:
-```bash
-# 使用 private_ 前缀
-chezmoi chattr +private ~/.ssh/config
 ```
 
 ### 问题 3: 配置未应用
@@ -264,20 +357,38 @@ chezmoi apply --force
 chezmoi diff
 ```
 
-### 问题 4: 模板变量错误
+### 问题 4: Shell 启动报错
 
-**症状**: 模板渲染失败
+**症状**: 打开终端时出现错误
 
 **解决**:
 ```bash
-# 测试模板
-chezmoi cat ~/.zshrc
+# 检查哪个模块有问题
+# 逐个加载模块进行测试
 
-# 检查 chezmoi 配置
-chezmoi doctor
+# 查看完整的错误信息
+zsh -xvs ~/.zshrc 2>&1 | less
 ```
 
 ## 📚 进阶主题
+
+### 添加新的配置模块
+
+1. 在 `dot_zsh_config/` 中创建新文件
+2. 在 `dot_zshrc.tmpl` 中添加加载语句
+3. 重新应用配置
+
+```bash
+# 1. 创建新模块
+chezmoi add ~/.zsh_config/my-module.zsh
+
+# 2. 编辑主配置文件
+chezmoi edit ~/.zshrc
+# 添加: source "$ZSH_CONFIG_DIR/my-module.zsh"
+
+# 3. 应用更改
+chezmoi apply
+```
 
 ### 敏感信息管理
 
@@ -302,24 +413,8 @@ brew install chezmoi
 # 2. 克隆仓库
 chezmoi init --apply https://github.com/Phil-Fan/dot-files.git
 
-# 3. 根据需要修改配置
-chezmoi edit-config
-
-# 4. 应用更改
-chezmoi apply
-```
-
-### 备份和恢复
-
-**备份**:
-```bash
-chezmoi git push
-```
-
-**恢复**:
-```bash
-chezmoi init https://github.com/Phil-Fan/dot-files.git
-chezmoi apply
+# 3. 运行设置脚本
+~/.local/share/chezmoi/scripts/setup.sh
 ```
 
 ## 🔗 相关链接

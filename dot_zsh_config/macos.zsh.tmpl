@@ -1,0 +1,44 @@
+# macOS 特定配置模块
+# 文件: ~/.zsh_config/macos.zsh
+
+{{ if eq .chezmoi.os "darwin" }}
+
+# ========== macOS 环境配置 ==========
+
+# X11 设置 (用于运行 X11 应用)
+export DISPLAY={{ .macOS.display }}
+
+# Homebrew
+export PATH="{{ .macOS.homebrewPath }}:$PATH"
+
+# Flutter 版本管理器
+export PUB_HOSTED_URL="https://pub.flutter-io.cn"
+export FLUTTER_STORAGE_BASE_URL="https://storage.flutter-io.cn"
+export PATH="$HOME/Library/Application Support/fvm/current/bin:$PATH"
+
+# Android SDK
+export ANDROID_SDK_ROOT={{ .macOS.androidSdkRoot }}
+export ANDROID_HOME={{ .macOS.androidSdkRoot }}
+export PATH=$ANDROID_SDK_ROOT/cmdline-tools/latest/bin:$PATH
+export PATH=$ANDROID_SDK_ROOT/platform-tools:$PATH
+export PATH=$ANDROID_SDK_ROOT/emulator:$PATH
+
+# pnpm
+export PNPM_HOME="$HOME/Library/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+
+# Windsurf
+export PATH="$HOME/.codeium/windsurf/bin:$PATH"
+
+# Docker CLI completions
+fpath=($HOME/.docker/completions $fpath)
+autoload -Uz compinit
+compinit
+
+# iTerm2 Shell Integration
+test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
+
+{{ end }}

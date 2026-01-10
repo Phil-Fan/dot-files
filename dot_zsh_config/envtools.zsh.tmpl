@@ -1,0 +1,43 @@
+# EnvTools 配置模块
+# 文件: ~/.zsh_config/envtools.zsh
+
+# ============ EnvTools: ShowInfo ============
+# 显示 Shell 和 Node.js 版本信息
+
+# Detect shell version
+if [ -n "$BASH_VERSION" ]; then
+    SHELL_INFO="Bash ${BASH_VERSION%%.*}"
+elif [ -n "$ZSH_VERSION" ]; then
+    SHELL_INFO="Zsh ${ZSH_VERSION%%.*}"
+else
+    SHELL_INFO="Shell $(basename $SHELL)"
+fi
+
+# ANSI color codes
+GREEN='\033[0;32m'
+CYAN='\033[0;36m'
+YELLOW='\033[1;33m'
+NC='\033[0m' # No Color
+
+echo -e "${GREEN}>>> TOPCODER FULLSTACK EnvTools (${SHELL_INFO})${NC}"
+
+# Detect Node.js and its manager
+if command -v node >/dev/null 2>&1; then
+    NODE_PATH=$(command -v node)
+    NODE_VERSION=$(node --version 2>/dev/null)
+    
+    if echo "$NODE_PATH" | grep -q "volta"; then
+        NODE_MANAGER="volta"
+    elif echo "$NODE_PATH" | grep -q "fnm"; then
+        NODE_MANAGER="fnm"
+    elif echo "$NODE_PATH" | grep -q "nvm"; then
+        NODE_MANAGER="nvm"
+    else
+        NODE_MANAGER="system"
+    fi
+    
+    echo -e "    ${CYAN}Node: ${NODE_VERSION} (${NODE_MANAGER})${NC}"
+else
+    echo -e "    ${YELLOW}Node.js: Not found in PATH${NC}"
+fi
+# ============ End EnvTools: ShowInfo ============
