@@ -1,0 +1,21 @@
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
+# =============================================================================
+# 模块化 Zsh 配置
+# 按顺序加载 ~/.zsh_config/ 目录下的配置模块
+# =============================================================================
+
+export ZSH_CONFIG_DIR="$HOME/.zsh_config"
+
+# 按数字顺序加载配置模块
+for config in "$ZSH_CONFIG_DIR"/[0-9]*.zsh; do
+    [ -f "$config" ] && source "$config"
+done
+
+# =============================================================================
+# 自动补全初始化
+# =============================================================================
+autoload -U compinit && compinit -u

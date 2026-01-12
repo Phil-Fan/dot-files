@@ -1,9 +1,0 @@
-# Bun 配置模块
-# 文件: ~/.zsh_config/bun.zsh
-
-# Bun 安装和配置
-if [ -d "$HOME/.bun" ]; then
-    export BUN_INSTALL="$HOME/.bun"
-    export PATH="$BUN_INSTALL/bin:$PATH"
-    [ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
-fi

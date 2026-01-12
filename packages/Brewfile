@@ -26,11 +26,19 @@ brew "xcodegen"        # Xcode 项目生成工具
 # ===== 命令行增强 =====
 brew "fzf"             # 模糊查找工具
 brew "fd"              # 更好的 find 命令
+brew "ripgrep"         # 更好的 grep 命令
+brew "bat"             # 更好的 cat 命令
+brew "eza"             # 更好的 ls 命令
+brew "zoxide"          # 智能目录跳转
 brew "tree"            # 目录树显示
 brew "tmux"            # 终端复用器
 brew "thefuck"         # 命令纠错工具
 brew "autocorrect"     # 自动纠错
 brew "ast-grep"        # AST 代码搜索和替换
+
+# ===== 编辑器 =====
+brew "neovim"          # 现代化 Vim 编辑器
+brew "lazygit"         # Git TUI 工具
 
 # ===== 构建工具 =====
 brew "automake"
@@ -62,6 +70,7 @@ tap "dart-lang/dart"
 
 # ===== Cask 应用 (GUI 应用) =====
 cask "devtoys"                    # 开发工具箱
+cask "font-jetbrains-mono-nerd-font"  # JetBrains Mono Nerd Font
 cask "font-smiley-sans"           # 思源黑体字体
 cask "mactex"                     # MacTeX LaTeX 发行版
 cask "openinterminal"             # 在当前目录打开终端

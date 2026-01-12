@@ -1,0 +1,55 @@
+# Lazygit 配置
+# https://github.com/jesseduffield/lazygit
+
+gui:
+  # 使用 Nerd Font 图标
+  nerdFontsVersion: "3"
+  # 主题设置
+  theme:
+    activeBorderColor:
+      - "#ff9e64"
+      - bold
+    inactiveBorderColor:
+      - "#414868"
+    optionsTextColor:
+      - "#7aa2f7"
+    selectedLineBgColor:
+      - "#282c34"
+    selectedRangeBgColor:
+      - "#3d5971"
+    cherryPickedCommitBgColor:
+      - "#3d5971"
+    cherryPickedCommitFgColor:
+      - "#7aa2f7"
+    unstagedChangesColor:
+      - "#f7768e"
+    defaultFgColor:
+      - "#c0caf5"
+
+# 更新信息
+update:
+  method: prompt # 询问是否更新
+  days: 14        # 14 天检查一次
+
+# 启用功能
+confirmOnQuit: true
+quitOnTopLevelReturn: true
+
+# 快捷键覆盖
+keybinding:
+  universal:
+    quit: q
+    quit-alt-changing-layout: <c-q>
+    return: esc
+    quitWithoutChangingDirectory: Q
+    togglePanel: <tab>
+    nextScreen: <c-right>
+    prevScreen: <c-left>
+    nextTab: ]
+    prevTab: [
+    createRebaseOptionsMenu: m
+    createCherryPickOptionsMenu: c
+    createResetOptionsMenu: r
+
+# 报告信息
+reporting: "undetermined" # 不发送匿名使用数据
