@@ -52,7 +52,7 @@ echo ""
 read -p "$(echo -e ${YELLOW}是否安装? [Y/n]: ${NC})" -n 1 -r
 echo ""
 if [[ ! $REPLY =~ ^[Nn]$ ]]; then
-    "{{ .chezmoi.sourceDir }}/scripts/install-oh-my-zsh-plugins.sh.tmpl"
+    bash "{{ .chezmoi.sourceDir }}/scripts/install-oh-my-zsh-plugins.sh.tmpl"
 fi
 
 echo ""
@@ -63,7 +63,7 @@ echo -e "${YELLOW}🍺 安装 macOS 软件包...${NC}"
 read -p "$(echo -e ${YELLOW}是否安装 Homebrew 软件包? [y/N]: ${NC})" -n 1 -r
 echo ""
 if [[ $REPLY =~ ^[Yy]$ ]]; then
-    "{{ .chezmoi.sourceDir }}/scripts/install-macos-tools.sh.tmpl"
+    bash "{{ .chezmoi.sourceDir }}/scripts/install-macos-tools.sh.tmpl"
 fi
 {{ else if eq .chezmoi.os "linux" }}
 echo -e "${YELLOW}🐧 Linux 软件包安装${NC}"
