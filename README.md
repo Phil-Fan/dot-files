@@ -5,6 +5,7 @@
 ## 📋 目录
 
 - [功能特性](#功能特性)
+- [Homebrew 安装和配置](#homebrew-安装和配置)
 - [快速开始](#快速开始)
 - [项目结构](#项目结构)
 - [模块化配置](#模块化配置)
@@ -21,20 +22,20 @@
 - ✅ **自动化**: 一键安装软件包和配置
 - ✅ **安全性**: 敏感信息不纳入版本控制
 
+## 📦 Homebrew 安装和配置
+[Homebrew](https://brew.sh/) 是一款自由开源的软件包管理系统，旨在简化 macOS 和 Linux 系统上的软件安装过程。它通过命令行工具 `brew` 来管理软件包的安装、更新和卸载。
+
+```bash
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+```
+
 ## 🚀 快速开始
 
 ### 新机器设置
 
-#### 1. 安装 Chezmoi
-
-**macOS**:
 ```bash
+# 使用 Homebrew 安装（推荐）
 brew install chezmoi
-```
-
-**Linux**:
-```bash
-curl -fsSL https://chezmoi.io/get | sh
 ```
 
 #### 2. 克隆并初始化
@@ -47,14 +48,24 @@ chezmoi init https://github.com/Phil-Fan/dot-files.git
 chezmoi apply
 ```
 
-#### 3. 安装软件包（macOS）
+#### 3. 安装软件包
 
+**macOS**:
 ```bash
 # 运行快速设置脚本
 ~/.local/share/chezmoi/scripts/setup.sh
 
 # 或者单独运行工具安装脚本
 ~/.local/share/chezmoi/scripts/install-macos-tools.sh
+```
+
+**Linux**:
+```bash
+# 运行快速设置脚本
+~/.local/share/chezmoi/scripts/setup.sh
+
+# 或者单独运行工具安装脚本
+~/.local/share/chezmoi/scripts/install-linux-tools.sh
 ```
 
 #### 4. 重新加载 Shell
@@ -67,6 +78,7 @@ source ~/.zshrc
 
 ### 从零开始完整安装
 
+**macOS**:
 ```bash
 # 1. 安装 chezmoi
 brew install chezmoi
@@ -78,6 +90,29 @@ chezmoi init https://github.com/Phil-Fan/dot-files.git
 ~/.local/share/chezmoi/scripts/setup.sh
 
 # 4. 重新加载 Shell
+exec zsh
+```
+
+**Linux**:
+```bash
+# 1. 安装 Homebrew（如果未安装）
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+# 2. 将 Homebrew 添加到 PATH（根据 shell 类型）
+# 对于 Zsh：
+echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> ~/.zprofile
+eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+
+# 3. 安装 chezmoi
+brew install chezmoi
+
+# 4. 初始化仓库
+chezmoi init https://github.com/Phil-Fan/dot-files.git
+
+# 5. 运行快速设置脚本（会自动应用配置并安装软件）
+~/.local/share/chezmoi/scripts/setup.sh
+
+# 6. 重新加载 Shell
 exec zsh
 ```
 
@@ -106,10 +141,13 @@ dot-files/
 ├── dot_p10k.zsh                    # Powerlevel10k 配置
 ├── dot_gitconfig.tmpl              # Git 配置模板
 ├── dot_condarc                     # Conda 配置
-├── Brewfile                        # Homebrew 包清单
+├── packages/                       # 包管理目录
+│   ├── Brewfile                    # macOS Homebrew 包清单
+│   └── Brewfile.linux              # Linux Homebrew 包清单（精简版）
 ├── scripts/                        # 脚本目录
 │   ├── setup.sh.tmpl               # 快速设置脚本
-│   └── install-macos-tools.sh.tmpl # macOS 工具安装脚本
+│   ├── install-macos-tools.sh.tmpl # macOS 工具安装脚本
+│   └── install-linux-tools.sh.tmpl # Linux 工具安装脚本
 └── README.md                       # 本文档
 ```
 
@@ -244,12 +282,12 @@ chezmoi cat ~/.zshrc | less
 
 | 配置项 | macOS | Linux |
 |--------|-------|-------|
-| Homebrew | ✅ `/opt/homebrew` | ❌ |
+| Homebrew | ✅ `/opt/homebrew` | ✅ `/home/linuxbrew/.linuxbrew` |
 | X11 | ✅ `DISPLAY=:0` | ❌ |
-| 代理 | ✅ 条件启用 | ❌ |
-| Android SDK | ✅ | ❌ |
-| Flutter | ✅ | ❌ |
-| 应用别名 | ✅ (如 Typora) | ❌ |
+| 代理 | ✅ 条件启用 | ✅ 条件启用 |
+| Android SDK | ✅ | ✅ |
+| Flutter | ✅ | ✅ |
+| 应用别名 | ✅ (如 Typora) | ✅ (Linux 特定应用) |
 
 ### 自定义配置
 
@@ -312,6 +350,30 @@ export HTTP_PROXY="{{ .macOS.proxyUrl }}"
 - 更新 Homebrew
 - 从 Brewfile 安装所有软件包
 - 清理旧版本
+
+### Linux 工具安装脚本
+
+`scripts/install-linux-tools.sh` - 自动安装 Linux 开发工具：
+
+```bash
+~/.local/share/chezmoi/scripts/install-linux-tools.sh
+```
+
+功能：
+- 检查并安装 Homebrew（Linuxbrew）
+- 更新 Homebrew
+- 从 `packages/Brewfile.linux` 安装软件包（精简版，不含 macOS 专属包）
+- 清理旧版本
+- 配置 Linux 特定的环境变量
+
+**包管理差异**：
+- **macOS**: 使用完整的 `packages/Brewfile`，包含 iOS 开发工具和 GUI 应用
+- **Linux**: 使用 `packages/Brewfile.linux`，去除 macOS 专属内容：
+  - ❌ iOS 开发工具（cocoapods, carthage, ideviceinstaller, ios-deploy, xcodegen）
+  - ❌ Swift 工具（swiftlint）
+  - ❌ GUI 应用（devtoys, mactex, openinterminal, piclist）
+  - ❌ X11 服务（Linux 系统自带）
+  - ✅ 保留通用开发工具和命令行增强工具
 
 ## 🔍 故障排除
 
@@ -406,6 +468,7 @@ export CODEX_API_KEY="your-key"
 
 ### 添加新机器
 
+**macOS**:
 ```bash
 # 1. 安装 chezmoi
 brew install chezmoi
@@ -414,6 +477,22 @@ brew install chezmoi
 chezmoi init --apply https://github.com/Phil-Fan/dot-files.git
 
 # 3. 运行设置脚本
+~/.local/share/chezmoi/scripts/setup.sh
+```
+
+**Linux**:
+```bash
+# 1. 安装 Homebrew（如果未安装）
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+
+# 2. 安装 chezmoi
+brew install chezmoi
+
+# 3. 克隆仓库
+chezmoi init --apply https://github.com/Phil-Fan/dot-files.git
+
+# 4. 运行设置脚本
 ~/.local/share/chezmoi/scripts/setup.sh
 ```
 
