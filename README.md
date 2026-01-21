@@ -1,8 +1,10 @@
 # Dotfiles
 
-## Quick Start
+我的 dotfiles 配置，使用 chezmoi 管理。
 
-**macOS / Linux** (统一使用 Homebrew):
+用于一键安装 PhilFan 所有使用到的软件和配置。
+
+## Quick Start
 
 ```bash
 # 安装 Homebrew（如果尚未安装）
@@ -16,14 +18,8 @@ chezmoi init https://github.com/Phil-Fan/dot-files.git
 chezmoi apply
 ```
 
-**运行设置脚本**:
-
 ```bash
-# 快速设置（自动检测平台）
-~/.local/share/chezmoi/scripts/setup.sh
-
-# 或单独运行包安装脚本
-~/.local/share/chezmoi/scripts/install-packages.sh
+source ~/.local/share/chezmoi/scripts/setup.sh
 ```
 
 ```bash
@@ -57,8 +53,7 @@ dot-files/
 ├── scripts/                        # 脚本目录
 │   ├── setup.sh                    # 快速设置脚本
 │   ├── install-packages.sh         # 统一包安装脚本（支持 macOS 和 Linux）
-│   ├── install-oh-my-zsh-plugins.sh # Oh My Zsh 插件安装
-│   └── preview.sh                  # 配置预览脚本
+│   └── install-oh-my-zsh-plugins.sh # Oh My Zsh 及插件安装
 └── README.md                       # 本文档
 ```
 
