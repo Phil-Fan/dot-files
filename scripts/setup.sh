@@ -65,11 +65,15 @@ if [[ "$OS" == "Darwin" ]]; then
     read -p "$(echo -e ${YELLOW}是否安装 Homebrew 软件包? [y/N]: ${NC})" -n 1 -r
     echo ""
     if [[ $REPLY =~ ^[Yy]$ ]]; then
-        bash "$SCRIPT_DIR/install-macos-tools.sh"
+        bash "$SCRIPT_DIR/install-packages.sh"
     fi
 elif [[ "$OS" == "Linux" ]]; then
-    echo -e "${YELLOW}🐧 Linux 软件包安装${NC}"
-    echo -e "${BLUE}请根据您的 Linux 发行版手动安装所需软件包${NC}"
+    echo -e "${YELLOW}🍺 安装 Linux 软件包（使用 Homebrew）...${NC}"
+    read -p "$(echo -e ${YELLOW}是否安装 Homebrew 软件包? [y/N]: ${NC})" -n 1 -r
+    echo ""
+    if [[ $REPLY =~ ^[Yy]$ ]]; then
+        bash "$SCRIPT_DIR/install-packages.sh"
+    fi
 fi
 
 echo ""

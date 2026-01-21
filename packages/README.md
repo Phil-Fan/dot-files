@@ -1,14 +1,15 @@
 # 包管理系统
 
-多平台软件包声明式配置管理。
+使用 Homebrew 统一管理 macOS 和 Linux 软件包。
 
 ## 📁 文件结构
 
 ```
 packages/
-├── common-packages.yaml   # 通用包定义（单一数据源）
 ├── Brewfile              # macOS Homebrew 包清单
-├── apt-packages.txt      # Ubuntu/Debian APT 包清单
+├── Brewfile-linux        # Linux Homebrew 包清单
+├── Brewfile.dev          # 开发环境额外包清单
+├── common-packages.yaml  # 通用包定义（单一数据源）
 └── README.md             # 本文档
 ```
 
@@ -23,24 +24,21 @@ packages/
 
 ### 手动安装
 
-#### macOS
+**macOS**:
 ```bash
-# 方法 1: 使用 Brewfile
 cd ~/.local/share/chezmoi
 brew bundle --file=packages/Brewfile
-
-# 方法 2: 单个安装
-brew install git fzf tmux
 ```
 
-#### Ubuntu/Debian
+**Linux**:
 ```bash
-# 方法 1: 使用包文件
 cd ~/.local/share/chezmoi
-sudo xargs -a packages/apt-packages.txt apt install -y
+brew bundle --file=packages/Brewfile-linux
+```
 
-# 方法 2: 单个安装
-sudo apt install git fzf tmux
+**单个安装**:
+```bash
+brew install git fzf tmux
 ```
 
 ## 📦 包分类
@@ -69,26 +67,29 @@ sudo apt install git fzf tmux
 ### 特定平台
 
 #### macOS 独有
-- 移动开发: cocoapods, carthage, fvm
-- GUI 应用: VSCode, Chrome, DevToys
+- 移动开发: cocoapods, carthage, fvm, xcodegen
+- GUI 应用: DevToys, MacTeX, OpenInTerminal
 
 #### Linux 独有
-- NVIDIA 驱动和 CUDA 工具
-- 容器工具: docker, podman
+- 终端文件管理器: yazi
+- 额外工具: jq, sevenzip, poppler, resvg, imagemagick
 
 ## ➕ 添加新软件包
 
-### 方法 1: 修改平台特定文件（快速）
+### 修改平台特定文件
 
 ```bash
 # macOS: 编辑 Brewfile
 chezmoi edit ~/.local/share/chezmoi/packages/Brewfile
 
-# Linux: 编辑 apt-packages.txt
-chezmoi edit ~/.local/share/chezmoi/packages/apt-packages.txt
+# Linux: 编辑 Brewfile-linux
+chezmoi edit ~/.local/share/chezmoi/packages/Brewfile-linux
+
+# 开发环境额外包: 编辑 Brewfile.dev
+chezmoi edit ~/.local/share/chezmoi/packages/Brewfile.dev
 ```
 
-### 方法 2: 修改通用配置（推荐）
+### 修改通用配置
 
 1. 编辑 `common-packages.yaml`
 2. 运行生成脚本（如果实现了自动生成）
@@ -104,17 +105,16 @@ chezmoi edit ~/.local/share/chezmoi/packages/apt-packages.txt
 # macOS: 重新生成 Brewfile
 brew bundle dump --file=~/.local/share/chezmoi/packages/Brewfile --force
 
-# Linux: 手动更新 apt-packages.txt
+# Linux: 重新生成 Brewfile-linux
+brew bundle dump --file=~/.local/share/chezmoi/packages/Brewfile-linux --force
 ```
 
 ### 清理不需要的包
 
 ```bash
-# macOS
+# macOS 和 Linux 通用
 brew cleanup
-
-# Linux
-sudo apt autoremove
+brew autoremove
 ```
 
 ## 📝 最佳实践

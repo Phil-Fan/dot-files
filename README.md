@@ -2,38 +2,28 @@
 
 ## Quick Start
 
+**macOS / Linux** (统一使用 Homebrew):
+
 ```bash
+# 安装 Homebrew（如果尚未安装）
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-```
 
-```bash
-# 使用 Homebrew 安装（推荐）
+# 安装 chezmoi
 brew install chezmoi
-```
 
-```bash
+# 初始化 dotfiles
 chezmoi init https://github.com/Phil-Fan/dot-files.git
 chezmoi apply
 ```
 
-**macOS**:
+**运行设置脚本**:
 
 ```bash
-# 运行快速设置脚本
+# 快速设置（自动检测平台）
 ~/.local/share/chezmoi/scripts/setup.sh
 
-# 或者单独运行工具安装脚本
-~/.local/share/chezmoi/scripts/install-macos-tools.sh
-```
-
-**Linux**:
-
-```bash
-# 运行快速设置脚本
-~/.local/share/chezmoi/scripts/setup.sh
-
-# 或者单独运行工具安装脚本
-~/.local/share/chezmoi/scripts/install-linux-tools.sh
+# 或单独运行包安装脚本
+~/.local/share/chezmoi/scripts/install-packages.sh
 ```
 
 ```bash
@@ -67,13 +57,13 @@ dot-files/
 ├── dot_condarc                     # Conda 配置
 ├── packages/                       # 包管理目录
 │   ├── Brewfile                    # macOS Homebrew 包清单
-│   └── Brewfile.linux              # Linux Homebrew 包清单（精简版）
+│   ├── Brewfile-linux              # Linux Homebrew 包清单
+│   └── Brewfile.dev                # 开发环境额外包清单
 ├── scripts/                        # 脚本目录
 │   ├── setup.sh                    # 快速设置脚本
-│   ├── install-macos-tools.sh      # macOS 工具安装脚本
-│   ├── install-linux-tools.sh      # Linux 工具安装脚本
+│   ├── install-packages.sh         # 统一包安装脚本（支持 macOS 和 Linux）
 │   ├── install-oh-my-zsh-plugins.sh # Oh My Zsh 插件安装
-│   └── install-packages.sh         # 多平台包安装脚本
+│   └── preview.sh                  # 配置预览脚本
 └── README.md                       # 本文档
 ```
 
