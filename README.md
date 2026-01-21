@@ -34,11 +34,6 @@ source ~/.zshrc
 
 ```
 dot-files/
-├── .chezmoitemplates/              # 共享模板目录
-│   └── common/
-│       └── shell-header.zsh       # Shell 通用头部
-├── .chezmoidata/                   # 数据文件目录
-│   └── packages.yaml               # 包管理清单
 ├── dot_zsh_config/                 # Zsh 模块化配置目录
 │   ├── oh-my-zsh.zsh.tmpl          # Oh My Zsh 配置
 │   ├── environment.zsh.tmpl        # 环境变量
