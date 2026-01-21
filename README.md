@@ -46,10 +46,17 @@ dot-files/
 ├── dot_p10k.zsh                    # Powerlevel10k 配置
 ├── dot_gitconfig.tmpl              # Git 配置模板
 ├── dot_condarc                     # Conda 配置
-├── packages/                       # 包管理目录
-│   ├── Brewfile                    # macOS Homebrew 包清单
-│   ├── Brewfile-linux              # Linux Homebrew 包清单
-│   └── Brewfile.dev                # 开发环境额外包清单
+├── softwares/                      # 软件配置目录
+│   ├── packages/                   # 包管理目录
+│   │   ├── Brewfile                # macOS Homebrew 包清单
+│   │   ├── Brewfile-linux          # Linux Homebrew 包清单
+│   │   └── Brewfile.dev            # 开发环境额外包清单
+│   ├── editors/                    # 编辑器配置
+│   │   ├── vscode/                 # VS Code 设置和快捷键
+│   │   ├── cursor/                 # Cursor 编辑器设置
+│   │   └── claude-code/            # Claude Code 设置
+│   ├── extensions/                 # 浏览器扩展列表
+│   └── else/                       # 常用软件下载地址
 ├── scripts/                        # 脚本目录
 │   ├── setup.sh                    # 快速设置脚本
 │   ├── install-packages.sh         # 统一包安装脚本（支持 macOS 和 Linux）

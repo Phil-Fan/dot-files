@@ -24,7 +24,7 @@ echo ""
 
 # 包文件路径
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
-PACKAGES_DIR="$SCRIPT_DIR/../packages"
+PACKAGES_DIR="$SCRIPT_DIR/../softwares/packages"
 
 # macOS/Linux 通用安装函数
 install_homebrew() {
