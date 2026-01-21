@@ -18,11 +18,41 @@ echo ""
 
 # 0. 检查并安装 Oh My Zsh
 ZSH="$HOME/.oh-my-zsh"
-if [ ! -d "$ZSH" ]; then
+# 检查核心文件是否存在（而不是只检查目录）
+if [ ! -f "$ZSH/oh-my-zsh.sh" ]; then
     echo -e "${YELLOW}[0/4]${NC} 安装 Oh My Zsh..."
     echo -e "${BLUE}正在下载并安装 Oh My Zsh...${NC}"
+
+    # 如果目录存在但不完整，先清理
+    if [ -d "$ZSH" ]; then
+        echo -e "${YELLOW}检测到不完整的安装，正在清理...${NC}"
+        rm -rf "$ZSH"
+    fi
+
+    # 方法1: 使用官方安装脚本
     if sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended; then
-        echo -e "${GREEN}✅ Oh My Zsh 安装成功${NC}"
+        # 验证安装
+        if [ -f "$ZSH/oh-my-zsh.sh" ]; then
+            echo -e "${GREEN}✅ Oh My Zsh 安装成功${NC}"
+        else
+            echo -e "${RED}❌ 安装脚本执行成功但文件缺失，尝试备用方法...${NC}"
+            rm -rf "$ZSH"
+
+            # 方法2: 直接 clone 仓库
+            echo -e "${YELLOW}使用 Git 直接克隆...${NC}"
+            if command -v git &> /dev/null; then
+                git clone --depth=1 https://github.com/ohmyzsh/ohmyzsh.git "$ZSH"
+                if [ -f "$ZSH/oh-my-zsh.sh" ]; then
+                    echo -e "${GREEN}✅ Oh My Zsh 安装成功（Git 方式）${NC}"
+                else
+                    echo -e "${RED}❌ Git 克隆后仍缺少核心文件${NC}"
+                    exit 1
+                fi
+            else
+                echo -e "${RED}❌ Git 未安装，无法使用备用方法${NC}"
+                exit 1
+            fi
+        fi
     else
         echo -e "${RED}❌ Oh My Zsh 安装失败${NC}"
         exit 1
