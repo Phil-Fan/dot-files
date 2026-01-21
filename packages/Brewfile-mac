@@ -1,0 +1,9 @@
+# Brewfile-mac - macOS 专属 Homebrew 包清单
+# 使用方法: brew bundle --file=Brewfile-mac
+# 依赖: 需先安装 Brewfile
+
+# ===== Cask 应用 (GUI 应用) =====
+
+cask "mactex"                     # MacTeX LaTeX 发行版
+cask "openinterminal"             # 在当前目录打开终端
+cask "piclist"                    # 图床工具

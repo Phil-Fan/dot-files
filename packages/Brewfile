@@ -1,27 +1,20 @@
-# Brewfile - Homebrew 包清单
+# Brewfile - 通用 Homebrew 包清单（所有平台）
 # 使用方法: brew bundle [--file=Brewfile]
 
-# ===== 开发工具 =====
-brew "git"
-brew "git-lfs"
+# ===== 基础开发工具 =====
+brew "git"             # 版本控制
+brew "git-lfs"         # Git 大文件存储
 brew "gh"              # GitHub CLI
 brew "go"              # Go 语言
 brew "mercurial"       # Mercurial 版本控制
 brew "wget"            # 下载工具
+brew "jq"              # JSON 处理工具
+brew "sevenzip"        # 7z 压缩工具
 
 # ===== 版本管理器 =====
 brew "fnm"             # Fast Node Manager
 brew "rbenv"           # Ruby 版本管理
 brew "jenv"            # Java 版本管理
-
-# ===== 移动开发 =====
-brew "cocoapods"       # iOS 依赖管理
-brew "carthage"        # iOS 依赖管理
-brew "ideviceinstaller"
-brew "ios-deploy"
-brew "dart-lang/dart/dart"
-brew "befovy/taps/fvm" # Flutter Version Manager
-brew "xcodegen"        # Xcode 项目生成工具
 
 # ===== 命令行增强 =====
 brew "fzf"             # 模糊查找工具
@@ -30,6 +23,7 @@ brew "ripgrep"         # 更好的 grep 命令
 brew "bat"             # 更好的 cat 命令
 brew "eza"             # 更好的 ls 命令
 brew "zoxide"          # 智能目录跳转
+brew "autojump"        # 智能目录跳转
 brew "tree"            # 目录树显示
 brew "tmux"            # 终端复用器
 brew "thefuck"         # 命令纠错工具
@@ -39,40 +33,27 @@ brew "ast-grep"        # AST 代码搜索和替换
 # ===== 编辑器 =====
 brew "neovim"          # 现代化 Vim 编辑器
 brew "lazygit"         # Git TUI 工具
+brew "yazi"            # 终端文件管理器
 
 # ===== 构建工具 =====
 brew "automake"
 brew "libtool"
-brew "swiftlint"       # Swift 代码检查
-brew "typst"           # 排版工具
 brew "uv"              # Python 包管理器
-
-# ===== 容器和云 =====
-brew "podman"          # 容器管理
-brew "kind"            # Kubernetes in Docker
-brew "redis"           # 缓存数据库
 
 # ===== 文档和媒体 =====
 brew "pandoc"          # 文档转换工具
 brew "ffmpeg"          # 视频处理
-
-# ===== AI 和自动化 =====
-brew "gemini-cli"      # Google Gemini CLI
-brew "opencode"        # 代码工具
+brew "poppler"         # PDF 处理库
+brew "resvg"           # SVG 渲染工具
+brew "imagemagick"     # 图像处理工具
+cask "font-symbols-only-nerd-font"  # 符号 Nerd Font
+cask "font-jetbrains-mono-nerd-font"  # JetBrains Mono Nerd Font
 
 # ===== Dotfiles 管理 =====
 brew "chezmoi"         # Dotfiles 管理工具
 
-# ===== Tap 仓库 =====
-tap "homebrew/cask-fonts"
-tap "befovy/taps"
-tap "dart-lang/dart"
-
-# ===== Cask 应用 (GUI 应用) =====
-cask "devtoys"                    # 开发工具箱
-cask "font-jetbrains-mono-nerd-font"  # JetBrains Mono Nerd Font
-cask "font-smiley-sans"           # 思源黑体字体
-cask "mactex"                     # MacTeX LaTeX 发行版
-cask "openinterminal"             # 在当前目录打开终端
-cask "piclist"                    # 图床工具
-cask "xquartz"                    # X11 窗口系统
+# ===== AI 和自动化 =====
+brew "gemini-cli"      # Google Gemini CLI
+brew "opencode"        # 代码工具
+cask "codex"           # 代码片段管理
+cask "claude-code"

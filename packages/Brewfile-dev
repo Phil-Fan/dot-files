@@ -1,0 +1,24 @@
+# Brewfile.dev - 开发环境专属 Homebrew 包清单
+# 使用方法: brew bundle --file=Brewfile.dev
+# 依赖: 需先安装 Brewfile
+
+# ===== iOS/macOS 开发 =====
+brew "cocoapods"       # iOS 依赖管理
+brew "carthage"        # iOS 依赖管理
+brew "ideviceinstaller"
+brew "ios-deploy"
+brew "swiftlint"       # Swift 代码检查
+brew "xcodegen"        # Xcode 项目生成工具
+brew "typst"           # 排版工具
+
+# ===== 移动开发 (Flutter/Dart) =====
+tap "befovy/taps"
+tap "dart-lang/dart"
+brew "dart-lang/dart/dart"
+brew "befovy/taps/fvm"       # Flutter Version Manager
+cask "devtoys"                    # 开发工具箱
+
+# ===== 容器和云 =====
+brew "podman"          # 容器管理
+brew "kind"            # Kubernetes in Docker
+brew "redis"           # 缓存数据库
