@@ -1,5 +1,4 @@
 #!/bin/bash
-# chezmoi:template
 # chezmoi:executable
 
 set -e
@@ -17,7 +16,7 @@ echo -e "${BLUE}========================================${NC}"
 echo ""
 
 # 检测操作系统
-OS="{{ .chezmoi.os }}"
+OS="$(uname)"
 echo -e "${BLUE}检测到操作系统: ${YELLOW}${OS}${NC}"
 echo ""
 
@@ -61,17 +60,17 @@ fi
 echo ""
 
 # 3. 根据操作系统安装软件
-{{ if eq .chezmoi.os "darwin" }}
-echo -e "${YELLOW}🍺 安装 macOS 软件包...${NC}"
-read -p "$(echo -e ${YELLOW}是否安装 Homebrew 软件包? [y/N]: ${NC})" -n 1 -r
-echo ""
-if [[ $REPLY =~ ^[Yy]$ ]]; then
-    bash "$SCRIPT_DIR/install-macos-tools.sh"
+if [[ "$OS" == "Darwin" ]]; then
+    echo -e "${YELLOW}🍺 安装 macOS 软件包...${NC}"
+    read -p "$(echo -e ${YELLOW}是否安装 Homebrew 软件包? [y/N]: ${NC})" -n 1 -r
+    echo ""
+    if [[ $REPLY =~ ^[Yy]$ ]]; then
+        bash "$SCRIPT_DIR/install-macos-tools.sh"
+    fi
+elif [[ "$OS" == "Linux" ]]; then
+    echo -e "${YELLOW}🐧 Linux 软件包安装${NC}"
+    echo -e "${BLUE}请根据您的 Linux 发行版手动安装所需软件包${NC}"
 fi
-{{ else if eq .chezmoi.os "linux" }}
-echo -e "${YELLOW}🐧 Linux 软件包安装${NC}"
-echo -e "${BLUE}请根据您的 Linux 发行版手动安装所需软件包${NC}"
-{{ end }}
 
 echo ""
 echo -e "${GREEN}========================================${NC}"

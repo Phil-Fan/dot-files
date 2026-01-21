@@ -69,9 +69,11 @@ dot-files/
 │   ├── Brewfile                    # macOS Homebrew 包清单
 │   └── Brewfile.linux              # Linux Homebrew 包清单（精简版）
 ├── scripts/                        # 脚本目录
-│   ├── setup.sh.tmpl               # 快速设置脚本
-│   ├── install-macos-tools.sh.tmpl # macOS 工具安装脚本
-│   └── install-linux-tools.sh.tmpl # Linux 工具安装脚本
+│   ├── setup.sh                    # 快速设置脚本
+│   ├── install-macos-tools.sh      # macOS 工具安装脚本
+│   ├── install-linux-tools.sh      # Linux 工具安装脚本
+│   ├── install-oh-my-zsh-plugins.sh # Oh My Zsh 插件安装
+│   └── install-packages.sh         # 多平台包安装脚本
 └── README.md                       # 本文档
 ```
 

@@ -1,5 +1,4 @@
 #!/bin/bash
-# chezmoi:template
 # chezmoi:executable
 
 set -e
@@ -17,11 +16,11 @@ echo -e "${BLUE}========================================${NC}"
 echo ""
 
 # 检测操作系统
-OS="{{ .chezmoi.os }}"
+OS="$(uname)"
 DISTRO=""
 
 # 检测 Linux 发行版
-if [ "$OS" = "linux" ]; then
+if [ "$OS" = "Linux" ]; then
     if [ -f /etc/os-release ]; then
         . /etc/os-release
         DISTRO=$ID
@@ -41,11 +40,11 @@ PACKAGES_DIR="$SCRIPT_DIR/../packages"
 # macOS 安装函数
 install_macos() {
     echo -e "${YELLOW}🍺 检查 Homebrew...${NC}"
-    
+
     if ! command -v brew &> /dev/null; then
         echo -e "${GREEN}📦 安装 Homebrew...${NC}"
         /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-        
+
         # 配置 Homebrew
         if [[ $(uname -m) == 'arm64' ]]; then
             echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> ~/.zprofile
@@ -57,11 +56,11 @@ install_macos() {
     else
         echo -e "${GREEN}✅ Homebrew 已安装${NC}"
     fi
-    
+
     echo ""
     echo -e "${YELLOW}📦 从 Brewfile 安装软件包...${NC}"
     brew bundle --file="$PACKAGES_DIR/Brewfile"
-    
+
     echo ""
     echo -e "${GREEN}✅ macOS 软件包安装完成${NC}"
 }
@@ -70,33 +69,33 @@ install_macos() {
 install_ubuntu() {
     echo -e "${YELLOW}🔄 更新 APT 索引...${NC}"
     sudo apt update
-    
+
     echo ""
     echo -e "${YELLOW}📦 安装 APT 软件包...${NC}"
-    
+
     # 读取包列表并安装
     if [ -f "$PACKAGES_DIR/apt-packages.txt" ]; then
         echo -e "${BLUE}正在安装以下软件包:${NC}"
         cat "$PACKAGES_DIR/apt-packages.txt" | grep -v "^#" | grep -v "^$" | tr '\n' ' '
         echo ""
         echo ""
-        
+
         sudo xargs -a "$PACKAGES_DIR/apt-packages.txt" apt install -y
     else
         echo -e "${RED}❌ 包文件未找到: $PACKAGES_DIR/apt-packages.txt${NC}"
         exit 1
     fi
-    
+
     echo ""
     echo -e "${GREEN}✅ Ubuntu 软件包安装完成${NC}"
 }
 
 # 根据操作系统安装
 case "$OS" in
-    darwin)
+    Darwin)
         install_macos
         ;;
-    linux)
+    Linux)
         case "$DISTRO" in
             ubuntu|debian)
                 install_ubuntu
