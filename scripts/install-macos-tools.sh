@@ -1,6 +1,4 @@
-{{ if eq .chezmoi.os "darwin" -}}
 #!/bin/bash
-# chezmoi:template
 # chezmoi:executable
 
 set -e
@@ -12,17 +10,27 @@ YELLOW='\033[1;33m'
 BLUE='\033[0;34m'
 NC='\033[0m' # No Color
 
+# 检测操作系统
+if [[ "$(uname)" != "Darwin" ]]; then
+    echo -e "${RED}❌ 此脚本仅在 macOS 上运行${NC}"
+    exit 1
+fi
+
 echo -e "${BLUE}========================================${NC}"
 echo -e "${BLUE}   macOS 开发环境自动安装脚本${NC}"
 echo -e "${BLUE}========================================${NC}"
 echo ""
+
+# 获取脚本目录
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+BREWFILE_PATH="$SCRIPT_DIR/../packages/Brewfile"
 
 # 1. 检查并安装 Homebrew
 echo -e "${YELLOW}🍺 检查 Homebrew...${NC}"
 if ! command -v brew &> /dev/null; then
     echo -e "${GREEN}📦 安装 Homebrew...${NC}"
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-    
+
     # 根据架构设置 PATH
     if [[ $(uname -m) == 'arm64' ]]; then
         echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> ~/.zprofile
@@ -47,12 +55,11 @@ echo ""
 
 # 3. 从 Brewfile 安装软件包
 echo -e "${YELLOW}📦 从 Brewfile 安装软件包...${NC}"
-BREWFILE_PATH="{{ .chezmoi.sourceDir }}/packages/Brewfile"
 
 if [ -f "$BREWFILE_PATH" ]; then
     echo -e "${BLUE}正在安装软件包...${NC}"
     echo ""
-    
+
     if brew bundle --file="$BREWFILE_PATH"; then
         echo -e "${GREEN}✅ 所有软件包安装完成${NC}"
     else
@@ -80,10 +87,3 @@ echo -e "${BLUE}建议:${NC}"
 echo -e "  1. 重新加载 Shell: ${YELLOW}source ~/.zshrc${NC}"
 echo -e "  2. 检查安装: ${YELLOW}brew doctor${NC}"
 echo ""
-
-{{ else }}
-#!/bin/bash
-# 此脚本仅在 macOS 上运行
-echo "❌ 此脚本仅在 macOS 上运行"
-exit 1
-{{ end }}

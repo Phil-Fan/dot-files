@@ -35,7 +35,8 @@ fi
 echo ""
 
 # 包文件路径
-PACKAGES_DIR="{{ .chezmoi.sourceDir }}/packages"
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+PACKAGES_DIR="$SCRIPT_DIR/../packages"
 
 # macOS 安装函数
 install_macos() {
