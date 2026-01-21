@@ -1,0 +1,43 @@
+[
+    {
+        "key": "shift+cmd+r",
+        "command": "latex-workshop.recipes"
+    },
+    {
+        "key": "shift+cmd+r",
+        "command": "-rerunSearchEditorSearch",
+        "when": "inSearchEditor"
+    },
+    {
+        "key": "ctrl+b",
+        "command": "workbench.action.toggleSidebarVisibility"
+    },
+    {
+        "key": "cmd+b",
+        "command": "-workbench.action.toggleSidebarVisibility"
+    },
+    {
+        "key": "cmd+t",
+        "command": "workbench.action.files.newUntitledFile"
+    },
+    {
+        "key": "cmd+n",
+        "command": "-workbench.action.files.newUntitledFile"
+    },
+    {
+        "key": "cmd+d",
+        "command": "workbench.action.splitEditor"
+    },
+    {
+        "key": "cmd+shift+d",
+        "command": "workbench.action.splitEditorOrthogonal"
+    },
+    {
+        "key": "cmd+[",
+        "command": "workbench.action.focusPreviousGroup"
+    },
+    {
+        "key": "cmd+]",
+        "command": "workbench.action.focusNextGroup"
+    }
+]
