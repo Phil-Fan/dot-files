@@ -44,9 +44,10 @@ fi
 
 echo ""
 
-# 2. 安装 Oh My Zsh 自定义插件
-echo -e "${YELLOW}🔌 安装 Oh My Zsh 自定义插件...${NC}"
-echo -e "${BLUE}这将安装以下插件:${NC}"
+# 2. 安装 Oh My Zsh 及插件
+echo -e "${YELLOW}🔌 安装 Oh My Zsh 及插件...${NC}"
+echo -e "${BLUE}这将安装以下组件:${NC}"
+echo -e "  - Oh My Zsh (框架)"
 echo -e "  - zsh-autosuggestions (命令自动建议)"
 echo -e "  - zsh-syntax-highlighting (语法高亮)"
 echo -e "  - powerlevel10k (主题)"

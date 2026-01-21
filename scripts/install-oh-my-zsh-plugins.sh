@@ -12,12 +12,29 @@ BLUE='\033[0;34m'
 NC='\033[0m' # No Color
 
 echo -e "${BLUE}========================================${NC}"
-echo -e "${BLUE}   Oh My Zsh 自定义插件安装脚本${NC}"
+echo -e "${BLUE}   Oh My Zsh 及插件安装脚本${NC}"
 echo -e "${BLUE}========================================${NC}"
 echo ""
 
+# 0. 检查并安装 Oh My Zsh
+ZSH="$HOME/.oh-my-zsh"
+if [ ! -d "$ZSH" ]; then
+    echo -e "${YELLOW}[0/4]${NC} 安装 Oh My Zsh..."
+    echo -e "${BLUE}正在下载并安装 Oh My Zsh...${NC}"
+    if sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended; then
+        echo -e "${GREEN}✅ Oh My Zsh 安装成功${NC}"
+    else
+        echo -e "${RED}❌ Oh My Zsh 安装失败${NC}"
+        exit 1
+    fi
+else
+    echo -e "${GREEN}✅ Oh My Zsh 已安装，跳过${NC}"
+fi
+
+echo ""
+
 # Oh My Zsh 自定义目录
-ZSH_CUSTOM="${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}"
+ZSH_CUSTOM="${ZSH_CUSTOM:-$ZSH/custom}"
 PLUGINS_DIR="$ZSH_CUSTOM/plugins"
 THEMES_DIR="$ZSH_CUSTOM/themes"
 
@@ -74,10 +91,11 @@ install_repo "Powerlevel10k" \
 
 echo ""
 echo -e "${GREEN}========================================${NC}"
-echo -e "${GREEN}   🎉 插件安装完成！${NC}"
+echo -e "${GREEN}   🎉 安装完成！${NC}"
 echo -e "${GREEN}========================================${NC}"
 echo ""
-echo -e "${BLUE}已安装的插件:${NC}"
+echo -e "${BLUE}已安装组件:${NC}"
+echo -e "  ✅ Oh My Zsh"
 echo -e "  ✅ zsh-autosuggestions"
 echo -e "  ✅ zsh-syntax-highlighting"
 echo -e "  ✅ powerlevel10k"
