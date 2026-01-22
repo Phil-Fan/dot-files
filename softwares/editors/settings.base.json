@@ -1,29 +1,20 @@
 {
-    // 编辑器基础设置
     "editor.fontSize": 25,
     "editor.minimap.enabled": true,
     "editor.mouseWheelZoom": true,
     "editor.inlineSuggest.enabled": true,
     "editor.wordWrap": "on",
     "editor.unicodeHighlight.includeComments": false,
-
-    // Python 特定设置
     "[python]": {
         "editor.formatOnType": true
     },
-
-    // Git 设置
     "git.autofetch": true,
     "git.confirmSync": false,
     "git.enableStatusBarSync": false,
-
-    // 终端设置
     "terminal.integrated.scrollback": 100000,
     "terminal.integrated.fontSize": 21,
     "terminal.integrated.customGlyphs": false,
     "terminal.integrated.inheritEnv": false,
-
-    // GitHub Copilot
     "github.copilot.enable": {
         "*": true,
         "plaintext": false,
@@ -31,17 +22,11 @@
         "scminput": false,
         "python": true
     },
-
-    // 拼写检查
     "cSpell.userWords": [
         "heapify",
         "pymdownx"
     ],
-
-    // Markdown 预��
     "markdown-preview-enhanced.codeBlockTheme": "vue.css",
-
-    // LaTeX Workshop 配置
     "latex.linter.enabled": false,
     "latex-workshop.latex.tools": [
         {
@@ -128,8 +113,6 @@
     "latex-workshop.latex.autoClean.run": "never",
     "latex-workshop.latex.recipe.default": "lastUsed",
     "latex-workshop.view.pdf.internal.synctex.keybinding": "double-click",
-
-    // Vim 模式设置 (jj 映射为 Esc)
     "vim.insertModeKeyBindings": [
         {
             "before": [
@@ -151,14 +134,10 @@
     },
     "vim.hlsearch": true,
     "vim.useCtrlKeys": false,
-
-    // Hex Editor
     "hexeditor.columnWidth": 13,
     "hexeditor.showDecodedText": true,
     "hexeditor.defaultEndianness": "little",
     "hexeditor.inspectorType": "aside",
-
-    // 其他设置
     "search.followSymlinks": false,
     "breadcrumbs.enabled": false,
     "remote.SSH.connectTimeout": 300,

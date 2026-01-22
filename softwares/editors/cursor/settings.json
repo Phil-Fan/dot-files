@@ -1,8 +1,4 @@
 {
-    // 继承基础配置: settings.base.json
-    // 以下为 Cursor 特定设置
-
-    // Cursor 特定设置
     "cursor.cpp.disabledLanguages": [
         "plaintext",
         "scminput"
@@ -14,13 +10,7 @@
     "files.associations": {
         "*.md": "markdown"
     },
-
-    // Claude Code 集成
     "claudeCode.preferredLocation": "panel",
-
-    // Cursor Composer
     "cursor.composer.shouldChimeAfterChatFinishes": true,
-
-    // 终端字体
     "terminal.integrated.fontFamily": "JetBrainsMono Nerd Font Mono"
 }
