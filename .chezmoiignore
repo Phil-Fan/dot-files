@@ -1,0 +1,35 @@
+# Chezmoi 忽略文件
+# 这些文件/目录不会被应用到 home 目录
+
+# 脚本目录（通过 chezmoi 管理，但不需要复制到 home）
+scripts/
+
+# 软件配置目录（参考文档，不需要复制到 home）
+softwares/
+
+# Neovim 配置（通过 chezmoi 管理，但不需要复制整个目录）
+# dot_config_nvim/
+
+# Git 相关
+.git/
+.gitignore
+.gitattributes
+
+# 文档
+README.md
+LICENSE
+
+# CI/CD
+.github/
+
+# 规范文件
+.editorconfig
+.eslintrc*
+.prettierrc*
+
+# 临时文件
+*.tmp
+*.bak
+*.swp
+*~
+.DS_Store

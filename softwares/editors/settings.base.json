@@ -1,0 +1,177 @@
+{
+    // 编辑器基础设置
+    "editor.fontSize": 25,
+    "editor.minimap.enabled": true,
+    "editor.mouseWheelZoom": true,
+    "editor.inlineSuggest.enabled": true,
+    "editor.wordWrap": "on",
+    "editor.unicodeHighlight.includeComments": false,
+
+    // Python 特定设置
+    "[python]": {
+        "editor.formatOnType": true
+    },
+
+    // Git 设置
+    "git.autofetch": true,
+    "git.confirmSync": false,
+    "git.enableStatusBarSync": false,
+
+    // 终端设置
+    "terminal.integrated.scrollback": 100000,
+    "terminal.integrated.fontSize": 21,
+    "terminal.integrated.customGlyphs": false,
+    "terminal.integrated.inheritEnv": false,
+
+    // GitHub Copilot
+    "github.copilot.enable": {
+        "*": true,
+        "plaintext": false,
+        "markdown": true,
+        "scminput": false,
+        "python": true
+    },
+
+    // 拼写检查
+    "cSpell.userWords": [
+        "heapify",
+        "pymdownx"
+    ],
+
+    // Markdown 预��
+    "markdown-preview-enhanced.codeBlockTheme": "vue.css",
+
+    // LaTeX Workshop 配置
+    "latex.linter.enabled": false,
+    "latex-workshop.latex.tools": [
+        {
+            "name": "pdflatex",
+            "command": "pdflatex",
+            "args": [
+                "-synctex=1",
+                "-interaction=nonstopmode",
+                "-file-line-error",
+                "%DOCFILE%"
+            ]
+        },
+        {
+            "name": "xelatex",
+            "command": "xelatex",
+            "args": [
+                "-synctex=1",
+                "-interaction=nonstopmode",
+                "-file-line-error",
+                "%DOCFILE%"
+            ]
+        },
+        {
+            "name": "bibtex",
+            "command": "bibtex",
+            "args": [
+                "%DOCFILE%"
+            ]
+        }
+    ],
+    "latex-workshop.latex.recipes": [
+        {
+            "name": "xelatex",
+            "tools": [
+                "xelatex"
+            ]
+        },
+        {
+            "name": "xe->bib->xe->xe",
+            "tools": [
+                "xelatex",
+                "bibtex",
+                "xelatex",
+                "xelatex"
+            ]
+        },
+        {
+            "name": "pdf->bib->pdf->pdf",
+            "tools": [
+                "pdflatex",
+                "bibtex",
+                "pdflatex",
+                "pdflatex"
+            ]
+        }
+    ],
+    "latex-workshop.latex.clean.fileTypes": [
+        "*.aux",
+        "*.bbl",
+        "*.blg",
+        "*.idx",
+        "*.ind",
+        "*.lof",
+        "*.lot",
+        "*.out",
+        "*.toc",
+        "*.acn",
+        "*.acr",
+        "*.alg",
+        "*.glg",
+        "*.glo",
+        "*.gls",
+        "*.ist",
+        "*.fls",
+        "*.log",
+        "*.fdb_latexmk"
+    ],
+    "latex-workshop.view.pdf.viewer": "tab",
+    "latex-workshop.latex.autoBuild.run": "onFileChange",
+    "latex-workshop.showContextMenu": true,
+    "latex-workshop.message.error.show": false,
+    "latex-workshop.message.warning.show": false,
+    "latex-workshop.intellisense.package.enabled": true,
+    "latex-workshop.latex.autoClean.run": "never",
+    "latex-workshop.latex.recipe.default": "lastUsed",
+    "latex-workshop.view.pdf.internal.synctex.keybinding": "double-click",
+
+    // Vim 模式设置 (jj 映射为 Esc)
+    "vim.insertModeKeyBindings": [
+        {
+            "before": [
+                "j",
+                "j"
+            ],
+            "after": [
+                "<Esc>"
+            ]
+        }
+    ],
+    "vim.handleKeys": {
+        "<C-a>": false,
+        "<C-f>": false,
+        "<C-x>": false,
+        "<C-w>": false,
+        "<C-b>": false,
+        "<C-c>": false
+    },
+    "vim.hlsearch": true,
+    "vim.useCtrlKeys": false,
+
+    // Hex Editor
+    "hexeditor.columnWidth": 13,
+    "hexeditor.showDecodedText": true,
+    "hexeditor.defaultEndianness": "little",
+    "hexeditor.inspectorType": "aside",
+
+    // 其他设置
+    "search.followSymlinks": false,
+    "breadcrumbs.enabled": false,
+    "remote.SSH.connectTimeout": 300,
+    "remote.SSH.maxReconnectionAttempts": 2,
+    "notebook.output.wordWrap": true,
+    "diffEditor.wordWrap": "on",
+    "pasteImage.insertPattern": "\\begin{figure}[htbp]\n \\centering\n \\includegraphics[width=0.4\\textwidth]{${imageSyntaxPrefix}${imageFilePath}${imageSyntaxSuffix}}\n \\caption{  }\n \\label{  }\n\\end{figure}",
+    "pasteImage.path": "${currentFileDir}/figures",
+    "code-runner.runInTerminal": true,
+    "extensions.autoUpdate": true,
+    "extensions.autoCheckUpdates": true,
+    "window.restoreWindows": "none",
+    "remote.SSH.lockfilesInTmp": true,
+    "remote.SSH.remoteServerListenOnSocket": true,
+    "workbench.settings.applyToAllProfiles": []
+}
