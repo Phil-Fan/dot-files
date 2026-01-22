@@ -8,12 +8,16 @@
 softwares/editors/
 ├── settings.base.json        # 共享基础配置（VSCode + Cursor）
 ├── merge-settings.sh          # 配置合并脚本
+├── sync-extensions.sh         # 扩展同步脚本
+├── EXTENSIONS.md              # 扩展列表说明
 ├── vscode/
 │   ├── settings.json          # VSCode 特定设置
-│   └── keybindings.json       # VSCode 快捷键
+│   ├��─ keybindings.json       # VSCode 快捷键
+│   └── extensions.json        # VSCode 扩展列表
 ├── cursor/
 │   ├── settings.json          # Cursor 特定设置
-│   └── keybindings.json       # Cursor 快捷键
+│   ├── keybindings.json       # Cursor 快捷键
+│   └── extensions.json        # Cursor 扩展列表
 └── claude-code/
     └── settings.json          # Claude Code 设置
 ```
@@ -92,6 +96,37 @@ VSCode 和 Cursor 共享相同的快捷键配置（由 keybindings.json 定义�
 - `Shift+Cmd+D` - 水平分屏
 - `Cmd+[` / `Cmd+]` - 切换分屏焦点
 - `Shift+Cmd+R` - LaTeX 编译链选择
+
+## 扩展同步
+
+### 方法一：使用同步脚本（推荐）
+
+```bash
+cd softwares/editors
+
+# 导出扩展列表
+./sync-extensions.sh cursor export
+./sync-extensions.sh vscode export
+
+# 批量安装扩展
+./sync-extensions.sh cursor install
+./sync-extensions.sh vscode install
+```
+
+### 方法二：使用 Settings Sync（跨设备同步）
+
+**VSCode**:
+1. 按 `Cmd+Shift+P` 打开命令面板
+2. 输入 `Settings Sync: Turn On`
+3. 登录 GitHub 账号
+4. 选择要同步的内容（Settings、Keyboard Shortcuts、Extensions）
+
+**Cursor**:
+- 内置支持 GitHub Settings Sync，设置中启用即可
+
+### 已安装扩展
+
+详见 [EXTENSIONS.md](./EXTENSIONS.md)
 
 ## 清理说明
 
