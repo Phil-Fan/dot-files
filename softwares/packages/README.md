@@ -2,17 +2,17 @@
 
 使用 Homebrew 统一管理 macOS 和 Linux 软件包。
 
-## 📁 文件结构
+## 文件结构
 
 ```
-packages/
+softwares/packages/
 ├── Brewfile          # macOS Homebrew 包清单
 ├── Brewfile-linux    # Linux Homebrew 包清单
 ├── Brewfile.dev      # 开发环境额外包清单
 └── README.md         # 本文档
 ```
 
-## 🚀 快速开始
+## 快速开始
 
 ### 使用统一脚本（推荐）
 
@@ -26,13 +26,13 @@ packages/
 **macOS**:
 ```bash
 cd ~/.local/share/chezmoi
-brew bundle --file=packages/Brewfile
+brew bundle --file=softwares/packages/Brewfile
 ```
 
 **Linux**:
 ```bash
 cd ~/.local/share/chezmoi
-brew bundle --file=packages/Brewfile-linux
+brew bundle --file=softwares/packages/Brewfile-linux
 ```
 
 **单个安装**:
@@ -40,7 +40,7 @@ brew bundle --file=packages/Brewfile-linux
 brew install git fzf tmux
 ```
 
-## 📦 包分类
+## 包分类
 
 ### 开发工具
 - Git, GitHub CLI, Go, Node.js, Ruby
@@ -73,22 +73,22 @@ brew install git fzf tmux
 - 终端文件管理器: yazi
 - 额外工具: jq, sevenzip, poppler, resvg, imagemagick
 
-## ➕ 添加新软件包
+## 添加新软件包
 
 ### 修改平台特定文件
 
 ```bash
 # macOS: 编辑 Brewfile
-chezmoi edit ~/.local/share/chezmoi/packages/Brewfile
+chezmoi edit ~/.local/share/chezmoi/softwares/packages/Brewfile
 
 # Linux: 编辑 Brewfile-linux
-chezmoi edit ~/.local/share/chezmoi/packages/Brewfile-linux
+chezmoi edit ~/.local/share/chezmoi/softwares/packages/Brewfile-linux
 
 # 开发环境额外包: 编辑 Brewfile.dev
-chezmoi edit ~/.local/share/chezmoi/packages/Brewfile.dev
+chezmoi edit ~/.local/share/chezmoi/softwares/packages/Brewfile.dev
 ```
 
-## 🔧 维护
+## 维护
 
 ### 同步包列表
 
@@ -96,10 +96,10 @@ chezmoi edit ~/.local/share/chezmoi/packages/Brewfile.dev
 
 ```bash
 # macOS: 重新生成 Brewfile
-brew bundle dump --file=~/.local/share/chezmoi/packages/Brewfile --force
+brew bundle dump --file=~/.local/share/chezmoi/softwares/packages/Brewfile --force
 
 # Linux: 重新生成 Brewfile-linux
-brew bundle dump --file=~/.local/share/chezmoi/packages/Brewfile-linux --force
+brew bundle dump --file=~/.local/share/chezmoi/softwares/packages/Brewfile-linux --force
 ```
 
 ### 清理不需要的包
@@ -110,14 +110,14 @@ brew cleanup
 brew autoremove
 ```
 
-## 📝 最佳实践
+## 最佳实践
 
 1. **分类清晰**: 按功能分组包
 2. **跨平台考虑**: 优先选择跨平台的工具
 3. **版本控制**: 将包清单纳入版本控制
-4. **定期更新**: 保持软件包列表最新
+4. **定期更新**: 保持软件���列表最新
 
-## 🔗 相关链接
+## 相关链接
 
 - [Homebrew Bundle](https://github.com/Homebrew/homebrew-bundle)
 - [Chezmoi 包管理](https://chezmoi.io/user-guide/advanced/install-packages-declaratively/)

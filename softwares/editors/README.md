@@ -5,7 +5,7 @@
 ## 目录结构
 
 ```
-editors/
+softwares/editors/
 ├── vscode/
 │   ├── settings.json      # VSCode 设置
 │   └── keybindings.json   # VSCode 快捷键
@@ -27,12 +27,12 @@ macOS 配置位置：
 复制命令：
 ```bash
 # VSCode
-cp editors/vscode/settings.json ~/Library/Application\ Support/Code/User/
-cp editors/vscode/keybindings.json ~/Library/Application\ Support/Code/User/
+cp softwares/editors/vscode/settings.json ~/Library/Application\ Support/Code/User/
+cp softwares/editors/vscode/keybindings.json ~/Library/Application\ Support/Code/User/
 
 # Cursor
-cp editors/cursor/settings.json ~/Library/Application\ Support/Cursor/User/
-cp editors/cursor/keybindings.json ~/Library/Application\ Support/Cursor/User/
+cp softwares/editors/cursor/settings.json ~/Library/Application\ Support/Cursor/User/
+cp softwares/editors/cursor/keybindings.json ~/Library/Application\ Support/Cursor/User/
 ```
 
 ### Claude Code
@@ -40,7 +40,7 @@ cp editors/cursor/keybindings.json ~/Library/Application\ Support/Cursor/User/
 配置位置：`~/.claude/`
 
 ```bash
-cp editors/claude-code/settings.json ~/.claude/
+cp softwares/editors/claude-code/settings.json ~/.claude/
 ```
 
 ## 配置说明
@@ -87,7 +87,7 @@ cp editors/claude-code/settings.json ~/.claude/
 - ❌ API keys 和 tokens
 - ❌ SSH 远程主机列表
 - ❌ 个人本地路径
-- ❌ 环境变量配置
+- ❌ 环境变量���置
 - ❌ 代理设置
 
 如需完整配置，请根据实际情况添加这些敏感信息。
