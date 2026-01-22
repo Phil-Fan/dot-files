@@ -6,24 +6,33 @@
 
 ## Quick Start
 
+### 方法一：一键安装
+
 ```bash
-# 安装 Homebrew（如果尚未安装）
+# 下载并运行安装脚本
+bash scripts/setup.sh
+```
+
+### 方法二：手动安装
+
+适用于 macOS (Apple Silicon/Intel) 和 Linux：
+
+```bash
+# 1. 安装 Homebrew
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
-# 安装 chezmoi
+# 2. 安装 chezmoi
 brew install chezmoi
 
-# 初始化 dotfiles
+# 3. 初始化 dotfiles（会自动配置平台相关的 Homebrew 路径）
 chezmoi init https://github.com/Phil-Fan/dot-files.git
 chezmoi apply
 ```
 
-```bash
-source ~/.local/share/chezmoi/scripts/setup.sh
-```
+### 重新加载 Shell
 
 ```bash
-source ~/.zshrc
+exec zsh
 ```
 
 ## Structure

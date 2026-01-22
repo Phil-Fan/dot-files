@@ -1,5 +1,4 @@
 #!/bin/bash
-# chezmoi:executable
 
 set -e
 
@@ -11,41 +10,119 @@ BLUE='\033[0;34m'
 NC='\033[0m' # No Color
 
 echo -e "${BLUE}========================================${NC}"
-echo -e "${BLUE}   Dotfiles 快速设置脚本${NC}"
+echo -e "${BLUE}   Dotfiles 完整安装脚本${NC}"
 echo -e "${BLUE}========================================${NC}"
 echo ""
 
 # 检测操作系统
 OS="$(uname)"
-echo -e "${BLUE}检测到操作系统: ${YELLOW}${OS}${NC}"
+ARCH="$(uname -m)"
+echo -e "${BLUE}检测到系统: ${YELLOW}${OS} ${ARCH}${NC}"
 echo ""
 
 # 获取脚本目录
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 
-# 1. 应用 chezmoi 配置
-echo -e "${YELLOW}📝 应用 chezmoi 配置...${NC}"
-echo -e "${BLUE}这将会覆盖以下文件:${NC}"
+# ============================================
+# 步骤 1: 安装 Homebrew
+# ============================================
+echo -e "${YELLOW}📦 步骤 1/5: 检查并安装 Homebrew...${NC}"
+
+if ! command -v brew &> /dev/null; then
+    echo -e "${YELLOW}Homebrew 未安装，开始安装...${NC}"
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+    # 配置 Homebrew 环境变量
+    echo -e "${YELLOW}配置 Homebrew 环境变量...${NC}"
+
+    if [[ "$OS" == "Darwin" ]]; then
+        if [[ "$ARCH" == 'arm64' ]]; then
+            # Apple Silicon
+            echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> ~/.zprofile
+            eval "$(/opt/homebrew/bin/brew shellenv)"
+        else
+            # Intel
+            echo 'eval "$(/usr/local/bin/brew shellenv)"' >> ~/.zprofile
+            eval "$(/usr/local/bin/brew shellenv)"
+        fi
+    else
+        # Linux
+        HOMEBREW_PREFIX="/home/linuxbrew/.linuxbrew"
+        echo "eval \"\$($HOMEBREW_PREFIX/bin/brew shellenv)\"" >> ~/.zprofile
+        eval "$($HOMEBREW_PREFIX/bin/brew shellenv)"
+    fi
+
+    echo -e "${GREEN}✅ Homebrew 安装完成${NC}"
+else
+    echo -e "${GREEN}✅ Homebrew 已安装: $(brew --version)${NC}"
+fi
+
+echo ""
+
+# ============================================
+# 步骤 2: 安装 Chezmoi
+# ============================================
+echo -e "${YELLOW}🔧 步骤 2/5: 检查并安装 Chezmoi...${NC}"
+
+if ! command -v chezmoi &> /dev/null; then
+    echo -e "${YELLOW}Chezmoi 未安装，开始安装...${NC}"
+    brew install chezmoi
+    echo -e "${GREEN}✅ Chezmoi 安装完成${NC}"
+else
+    echo -e "${GREEN}✅ Chezmoi 已安装: $(chezmoi --version)${NC}"
+fi
+
+echo ""
+
+# ============================================
+# 步骤 3: 初始化 Dotfiles
+# ============================================
+echo -e "${YELLOW}📝 步骤 3/5: 初始化 Dotfiles...${NC}"
+
+if [ -d ~/.local/share/chezmoi ]; then
+    echo -e "${YELLOW}检测到已有 chezmoi 目录${NC}"
+    read -p "$(echo -e ${YELLOW}是否重新初始化? [y/N]: ${NC})" -n 1 -r
+    echo ""
+    if [[ $REPLY =~ ^[Yy]$ ]]; then
+        rm -rf ~/.local/share/chezmoi
+        chezmoi init https://github.com/Phil-Fan/dot-files.git
+        echo -e "${GREEN}✅ Dotfiles 重新初始化完成${NC}"
+    else
+        echo -e "${BLUE}跳过初始化，使用现有配置${NC}"
+    fi
+else
+    chezmoi init https://github.com/Phil-Fan/dot-files.git
+    echo -e "${GREEN}✅ Dotfiles 初始化完成${NC}"
+fi
+
+echo ""
+
+# ============================================
+# 步骤 4: 应用 Chezmoi 配置
+# ============================================
+echo -e "${YELLOW}⚙️  步骤 4/5: 应用配置文件...${NC}"
+echo -e "${BLUE}将覆盖以下文件:${NC}"
 echo -e "  - ~/.zshrc"
 echo -e "  - ~/.gitconfig"
 echo -e "  - ~/.zprofile"
 echo -e "  - ~/.p10k.zsh"
 echo -e "  - ~/.condarc"
 echo ""
-read -p "$(echo -e ${YELLOW}是否继续? [y/N]: ${NC})" -n 1 -r
+read -p "$(echo -e ${YELLOW}是否继续? [Y/n]: ${NC})" -n 1 -r
 echo ""
-if [[ $REPLY =~ ^[Yy]$ ]]; then
+if [[ ! $REPLY =~ ^[Nn]$ ]]; then
     chezmoi apply
-    echo -e "${GREEN}✅ chezmoi 配置应用完成${NC}"
+    echo -e "${GREEN}✅ 配置文件应用完成${NC}"
 else
-    echo -e "${RED}❌ 已取消${NC}"
-    exit 1
+    echo -e "${YELLOW}跳过配置应用${NC}"
 fi
 
 echo ""
 
-# 2. 安装 Oh My Zsh 及插件
-echo -e "${YELLOW}🔌 安装 Oh My Zsh 及插件...${NC}"
+# ============================================
+# 步骤 5: 安装 Oh My Zsh 及插件
+# ============================================
+echo -e "${YELLOW}🔌 步骤 5/5: 安装 Oh My Zsh 及插件...${NC}"
 echo -e "${BLUE}这将安装以下组件:${NC}"
 echo -e "  - Oh My Zsh (框架)"
 echo -e "  - zsh-autosuggestions (命令自动建议)"
@@ -60,27 +137,27 @@ fi
 
 echo ""
 
-# 3. 根据操作系统安装软件
-if [[ "$OS" == "Darwin" ]]; then
-    echo -e "${YELLOW}🍺 安装 macOS 软件包...${NC}"
-    read -p "$(echo -e ${YELLOW}是否安装 Homebrew 软件包? [y/N]: ${NC})" -n 1 -r
-    echo ""
-    if [[ $REPLY =~ ^[Yy]$ ]]; then
-        bash "$SCRIPT_DIR/install-packages.sh"
-    fi
-elif [[ "$OS" == "Linux" ]]; then
-    echo -e "${YELLOW}🍺 安装 Linux 软件包（使用 Homebrew）...${NC}"
-    read -p "$(echo -e ${YELLOW}是否安装 Homebrew 软件包? [y/N]: ${NC})" -n 1 -r
-    echo ""
-    if [[ $REPLY =~ ^[Yy]$ ]]; then
-        bash "$SCRIPT_DIR/install-packages.sh"
-    fi
+# ============================================
+# 额外: 询问是否安装软件包
+# ============================================
+echo -e "${YELLOW}🍺 额外选项: 安装 Homebrew 软件包?${NC}"
+echo -e "${BLUE}这将安装 Brewfile 中定义的所有软件包${NC}"
+read -p "$(echo -e ${YELLOW}是否安装? [y/N]: ${NC})" -n 1 -r
+echo ""
+if [[ $REPLY =~ ^[Yy]$ ]]; then
+    bash "$SCRIPT_DIR/install-packages.sh"
 fi
 
 echo ""
+
+# ============================================
+# 完成
+# ============================================
 echo -e "${GREEN}========================================${NC}"
-echo -e "${GREEN}   🎉 设置完成！${NC}"
+echo -e "${GREEN}   🎉 安装完成！${NC}"
 echo -e "${GREEN}========================================${NC}"
 echo ""
-echo -e "${YELLOW}重新加载 Shell:${NC} exec zsh"
+echo -e "${YELLOW}下一步操作:${NC}"
+echo -e "  ${GREEN}1.${NC} 重新加载 Shell: ${YELLOW}exec zsh${NC}"
+echo -e "  ${GREEN}2.${NC} 或运行: ${YELLOW}source ~/.zshrc${NC}"
 echo ""
