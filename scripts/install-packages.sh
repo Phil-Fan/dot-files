@@ -25,6 +25,7 @@ echo ""
 # 包文件路径
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 PACKAGES_DIR="$SCRIPT_DIR/../softwares/packages"
+MAIN_BREWFILE="$PACKAGES_DIR/Brewfile"
 
 # macOS/Linux 通用安装函数
 install_homebrew() {
@@ -65,19 +66,38 @@ install_homebrew() {
     echo -e "${GREEN}✅ 软件包安装完成${NC}"
 }
 
-# 根据操作系统选择对应的 Brewfile
-case "$OS" in
-    Darwin)
-        install_homebrew "$PACKAGES_DIR/Brewfile"
-        ;;
-    Linux)
-        install_homebrew "$PACKAGES_DIR/Brewfile-linux"
-        ;;
-    *)
-        echo -e "${RED}❌ 不支持的操作系统: $OS${NC}"
-        exit 1
-        ;;
-esac
+# 可选安装函数
+install_optional_brewfile() {
+    local brewfile_name="$1"
+    local brewfile_path="$PACKAGES_DIR/$brewfile_name"
+
+    if [[ ! -f "$brewfile_path" ]]; then
+        echo -e "${YELLOW}⚠️  $brewfile_name 不存在，跳过${NC}"
+        return
+    fi
+
+    echo ""
+    echo -en "${YELLOW}是否安装 ${BLUE}$brewfile_name${YELLOW}? [y/N] ${NC}"
+    read -r response
+
+    if [[ "$response" =~ ^[Yy]$ ]]; then
+        install_homebrew "$brewfile_path"
+    else
+        echo -e "${BLUE}跳过 $brewfile_name${NC}"
+    fi
+}
+
+# 所有系统使用通用的 Brewfile
+echo -e "${GREEN}📦 安装通用软件包...${NC}"
+install_homebrew "$MAIN_BREWFILE"
+
+# 可选安装：macOS 专属包
+if [[ "$OS" == "Darwin" ]]; then
+    install_optional_brewfile "Brewfile-mac"
+fi
+
+# 可选安装：开发工具包
+install_optional_brewfile "Brewfile-dev"
 
 echo ""
 echo -e "${GREEN}========================================${NC}"

@@ -26,7 +26,7 @@ SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 # ============================================
 # 步骤 1: 安装 Homebrew
 # ============================================
-echo -e "${YELLOW}📦 步骤 1/6: 检查并安装 Homebrew...${NC}"
+echo -e "${YELLOW}📦 步骤 1/5: 检查并安装 Homebrew...${NC}"
 
 if ! command -v brew &> /dev/null; then
     echo -e "${YELLOW}Homebrew 未安装，开始安装...${NC}"
@@ -62,7 +62,7 @@ echo ""
 # ============================================
 # 步骤 2: 安装 Chezmoi
 # ============================================
-echo -e "${YELLOW}🔧 步骤 2/6: 检查并安装 Chezmoi...${NC}"
+echo -e "${YELLOW}🔧 步骤 2/5: 检查并安装 Chezmoi...${NC}"
 
 if ! command -v chezmoi &> /dev/null; then
     echo -e "${YELLOW}Chezmoi 未安装，开始安装...${NC}"
@@ -75,32 +75,9 @@ fi
 echo ""
 
 # ============================================
-# 步骤 3: 初始化 Dotfiles
+# 步骤 3: ���用 Chezmoi 配置
 # ============================================
-echo -e "${YELLOW}📝 步骤 3/6: 初始化 Dotfiles...${NC}"
-
-if [ -d ~/.local/share/chezmoi ]; then
-    echo -e "${YELLOW}检测到已有 chezmoi 目录${NC}"
-    read -p "$(echo -e ${YELLOW}是否重新初始化? [y/N]: ${NC})" -n 1 -r
-    echo ""
-    if [[ $REPLY =~ ^[Yy]$ ]]; then
-        rm -rf ~/.local/share/chezmoi
-        chezmoi init https://github.com/Phil-Fan/dot-files.git
-        echo -e "${GREEN}✅ Dotfiles 重新初始化完成${NC}"
-    else
-        echo -e "${BLUE}跳过初始化，使用现有配置${NC}"
-    fi
-else
-    chezmoi init https://github.com/Phil-Fan/dot-files.git
-    echo -e "${GREEN}✅ Dotfiles 初始化完成${NC}"
-fi
-
-echo ""
-
-# ============================================
-# 步骤 4: 应用 Chezmoi 配置
-# ============================================
-echo -e "${YELLOW}⚙️  步骤 4/6: 应用配置文件...${NC}"
+echo -e "${YELLOW}⚙️  步骤 3/5: 应用配置文件...${NC}"
 echo -e "${BLUE}将覆盖以下文件:${NC}"
 echo -e "  - ~/.zshrc"
 echo -e "  - ~/.gitconfig"
@@ -122,7 +99,7 @@ echo ""
 # ============================================
 # 步骤 5: 安装 Oh My Zsh 及插件
 # ============================================
-echo -e "${YELLOW}🔌 步骤 5/6: 安装 Oh My Zsh 及插件...${NC}"
+echo -e "${YELLOW}🔌 步骤 4/5: 安装 Oh My Zsh 及插件...${NC}"
 echo -e "${BLUE}这将安装以下组件:${NC}"
 echo -e "  - Oh My Zsh (框架)"
 echo -e "  - zsh-autosuggestions (命令自动建议)"
