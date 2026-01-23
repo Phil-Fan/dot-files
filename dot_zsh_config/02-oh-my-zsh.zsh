@@ -7,7 +7,7 @@ export ZSH="$HOME/.oh-my-zsh"
 # 自定义插件和主题目录
 export ZSH_CUSTOM="${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}"
 
-# 确保自���义插件目录存在
+# 确保自定义插件目录存在
 mkdir -p "$ZSH_CUSTOM/plugins"
 mkdir -p "$ZSH_CUSTOM/themes"
 

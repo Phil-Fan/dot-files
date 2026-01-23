@@ -15,10 +15,17 @@ softwares/packages/
 
 ## 快速开始
 
-### 使用统一脚本（推荐）
+### 使用一键安装脚本（推荐）
 
 ```bash
-# 安装 Homebrew 包
+# 运行安装向导，包含所有包管理步骤
+bash scripts/setup.sh
+```
+
+### 使用独立脚本
+
+```bash
+# 安装 Homebrew 包（包含 NVM）
 ~/.local/share/chezmoi/scripts/install-packages.sh
 
 # 安装全局 pnpm 包
@@ -29,20 +36,18 @@ softwares/packages/
 
 **Homebrew 包**:
 
-**macOS**:
+**macOS/Linux** (使用通用 Brewfile):
 ```bash
 cd ~/.local/share/chezmoi
 brew bundle --file=softwares/packages/Brewfile
 ```
 
-**Linux**:
-```bash
-cd ~/.local/share/chezmoi
-brew bundle --file=softwares/packages/Brewfile-linux
-```
-
 **单个安装**:
 ```bash
+# NVM 现在通过 Homebrew 管理
+brew install nvm
+
+# 其他软件包
 brew install git fzf tmux
 ```
 
@@ -52,18 +57,19 @@ brew install git fzf tmux
 ~/.local/share/chezmoi/scripts/install-pnpm-global.sh
 
 # 手动安装
-pnpm add -g @anthropic-ai/claude-code codex
+pnpm add -g @anthropic-ai/claude-code codex opencode-ai
 ```
 
 ## 包分类
 
 ### 开发工具
-- Git, GitHub CLI, Go, Node.js (NVM), Ruby
-- 版本管理器: NVM, rbenv, jenv
+- Git, GitHub CLI, Go, Ruby, Mercurial
+- 版本管理器: NVM (通过 Homebrew), rbenv, jenv
 
-### AI 工具 (通过 pnpm 管理)
-- @anthropic-ai/claude-code
-- codex
+### AI 工具 (通过 pnpm 全局包管理)
+- @anthropic-ai/claude-code - Anthropic Claude Code CLI
+- @openai/codex - OpenAI Codex CLI
+- opencode-ai - OpenCode AI CLI
 
 ### 命令行工具
 - fzf (模糊查找)
@@ -150,7 +156,7 @@ pnpm remove -g <package>
 1. **分类清晰**: 按功能分组包
 2. **跨平台考虑**: 优先选择跨平台的工具
 3. **版本控制**: 将包清单纳入版本控制
-4. **定期更新**: 保持软件���列表最新
+4. **定期更新**: 保持软件包列表最新
 
 ## 相关链接
 

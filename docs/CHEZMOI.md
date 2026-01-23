@@ -31,7 +31,7 @@ scripts/
 softwares/
 ```
 
-��样，`chezmoi apply` 会跳过这些目录，不会将它们复制到 home 目录。
+这样，`chezmoi apply` 会跳过这些目录，不会将它们复制到 home 目录。
 
 ### 当前状态
 

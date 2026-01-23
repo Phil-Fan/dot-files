@@ -14,7 +14,7 @@ brew "sevenzip"        # 7z 压缩工具
 # ===== 版本管理器 =====
 brew "rbenv"           # Ruby 版本管理
 brew "jenv"            # Java 版本管理
-# Node.js 使用 NVM 管理（通过安装脚本安装，不通过 brew）
+brew "nvm"             # Node.js 版本管理
 
 # ===== 命令行增强 =====
 brew "fzf"             # 模糊查找工具
@@ -51,9 +51,3 @@ cask "font-jetbrains-mono-nerd-font"  # JetBrains Mono Nerd Font
 
 # ===== Dotfiles 管理 =====
 brew "chezmoi"         # Dotfiles 管理工具
-
-# ===== AI 和自动化 =====
-# AI 工具通过 pnpm 管理：
-# - @anthropic-ai/claude-code
-# - codex
-brew "opencode"        # 代码工具

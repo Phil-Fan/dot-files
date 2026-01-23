@@ -4,6 +4,7 @@
 # ===== AI 工具 =====
 @anthropic-ai/claude-code  # Anthropic Claude Code CLI
 @openai/codex              # OpenAI Codex CLI
+opencode-ai                # OpenCode AI CLI
 
 # ===== 可以添加其他全局包 =====
 # typescript

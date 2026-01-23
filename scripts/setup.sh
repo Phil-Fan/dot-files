@@ -2,59 +2,142 @@
 
 set -e
 
+# ============================================
 # 颜色定义
+# ============================================
 RED='\033[0;31m'
 GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
 BLUE='\033[0;34m'
+CYAN='\033[0;36m'
+BOLD='\033[1m'
 NC='\033[0m' # No Color
 
-echo -e "${BLUE}========================================${NC}"
-echo -e "${BLUE}   Dotfiles 完整安装脚本${NC}"
-echo -e "${BLUE}========================================${NC}"
-echo ""
+# ============================================
+# 辅助函数
+# ============================================
+print_header() {
+    echo -e "${CYAN}╔════════════════════════════════════════════════════════════════╗${NC}"
+    echo -e "${CYAN}║${NC} ${BOLD}                    Dotfiles 安装向导                         ${NC}${CYAN}║${NC}"
+    echo -e "${CYAN}╠════════════════════════════════════════════════════════════════╣${NC}"
+    echo -e "${CYAN}║${NC} ${BOLD}一套完整的开发环境配置，涵盖 Shell、工具及语言环境            ${NC}${CYAN}║${NC}"
+    echo -e "${CYAN}╚════════════════════════════════════════════════════════════════╝${NC}"
+    echo ""
+}
 
-# 检测操作系统
+print_section() {
+    local title="$1"
+    local icon="$2"
+    echo -e "${BLUE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+    echo -e "  ${BOLD}${CYAN}${icon} ${title}${NC}"
+    echo -e "${BLUE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+    echo ""
+}
+
+print_step() {
+    local step="$1"
+    local total="$2"
+    local title="$3"
+    echo -e "${YELLOW}[${step}/${total}]${NC} ${BOLD}${title}${NC}"
+}
+
+print_success() {
+    echo -e "  ${GREEN}✓${NC} ${1}"
+}
+
+print_info() {
+    echo -e "  ${CYAN}▸${NC} ${1}"
+}
+
+print_warning() {
+    echo -e "  ${YELLOW}⚠${NC} ${1}"
+}
+
+print_error() {
+    echo -e "  ${RED}✗${NC} ${1}"
+}
+
+print_list() {
+    echo -e "    ${BLUE}•${NC} ${1}"
+}
+
+confirm() {
+    local prompt="$1"
+    local default="${2:-Y}"
+    if [[ "$default" == "Y" ]]; then
+        read -p "  $(echo -e ${YELLOW}▸${NC} ${prompt} [Y/n]: )" -n 1 -r
+        echo ""
+        [[ ! $REPLY =~ ^[Nn]$ ]]
+    else
+        read -p "  $(echo -e ${YELLOW}▸${NC} ${prompt} [y/N]: )" -n 1 -r
+        echo ""
+        [[ $REPLY =~ ^[Yy]$ ]]
+    fi
+}
+
+# ============================================
+# 系统检测
+# ============================================
+print_header
+
 OS="$(uname)"
 ARCH="$(uname -m)"
-echo -e "${BLUE}检测到系统: ${YELLOW}${OS} ${ARCH}${NC}"
+
+case "$OS" in
+    Darwin)
+        OS_NAME="macOS"
+        if [[ "$ARCH" == 'arm64' ]]; then
+            OS_NAME="$OS_NAME (Apple Silicon)"
+        else
+            OS_NAME="$OS_NAME (Intel)"
+        fi
+        ;;
+    Linux)
+        OS_NAME="Linux"
+        ;;
+    *)
+        OS_NAME="$OS"
+        ;;
+esac
+
+print_info "检测到系统: ${BOLD}${OS_NAME}${NC}"
 echo ""
 
 # 获取脚本目录
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+TOTAL_STEPS=6
 
 # ============================================
 # 步骤 1: 安装 Homebrew
 # ============================================
-echo -e "${YELLOW}📦 步骤 1/5: 检查并安装 Homebrew...${NC}"
+print_section "基础环境" "📦"
+print_step "1" "$TOTAL_STEPS" "Homebrew 包管理器"
+echo ""
 
 if ! command -v brew &> /dev/null; then
-    echo -e "${YELLOW}Homebrew 未安装，开始安装...${NC}"
+    print_warning "Homebrew 未安装，正在安装..."
+
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
-    # 配置 Homebrew 环境变量
-    echo -e "${YELLOW}配置 Homebrew 环境变量...${NC}"
+    print_info "配置 Homebrew 环境变量..."
 
     if [[ "$OS" == "Darwin" ]]; then
         if [[ "$ARCH" == 'arm64' ]]; then
-            # Apple Silicon
             echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> ~/.zprofile
             eval "$(/opt/homebrew/bin/brew shellenv)"
         else
-            # Intel
             echo 'eval "$(/usr/local/bin/brew shellenv)"' >> ~/.zprofile
             eval "$(/usr/local/bin/brew shellenv)"
         fi
     else
-        # Linux
         HOMEBREW_PREFIX="/home/linuxbrew/.linuxbrew"
         echo "eval \"\$($HOMEBREW_PREFIX/bin/brew shellenv)\"" >> ~/.zprofile
         eval "$($HOMEBREW_PREFIX/bin/brew shellenv)"
     fi
 
-    echo -e "${GREEN}✅ Homebrew 安装完成${NC}"
+    print_success "Homebrew 安装完成"
 else
-    echo -e "${GREEN}✅ Homebrew 已安装: $(brew --version)${NC}"
+    print_success "Homebrew 已安装: ${BOLD}$(brew --version | head -n1)${NC}"
 fi
 
 echo ""
@@ -62,100 +145,155 @@ echo ""
 # ============================================
 # 步骤 2: 安装 Chezmoi
 # ============================================
-echo -e "${YELLOW}🔧 步骤 2/5: 检查并安装 Chezmoi...${NC}"
+print_step "2" "$TOTAL_STEPS" "Chezmoi 配置管理"
+echo ""
 
 if ! command -v chezmoi &> /dev/null; then
-    echo -e "${YELLOW}Chezmoi 未安装，开始安装...${NC}"
+    print_info "正在安装 Chezmoi..."
     brew install chezmoi
-    echo -e "${GREEN}✅ Chezmoi 安装完成${NC}"
+    print_success "Chezmoi 安装完成"
 else
-    echo -e "${GREEN}✅ Chezmoi 已安装: $(chezmoi --version)${NC}"
+    print_success "Chezmoi 已安装: ${BOLD}$(chezmoi --version)${NC}"
 fi
 
 echo ""
 
 # ============================================
-# 步骤 3: ���用 Chezmoi 配置
+# 步骤 3: 安装 Oh My Zsh
 # ============================================
-echo -e "${YELLOW}⚙️  步骤 3/5: 应用配置文件...${NC}"
-echo -e "${BLUE}将覆盖以下文件:${NC}"
-echo -e "  - ~/.zshrc"
-echo -e "  - ~/.gitconfig"
-echo -e "  - ~/.zprofile"
-echo -e "  - ~/.p10k.zsh"
-echo -e "  - ~/.condarc"
-echo ""
-read -p "$(echo -e ${YELLOW}是否继续? [Y/n]: ${NC})" -n 1 -r
-echo ""
-if [[ ! $REPLY =~ ^[Nn]$ ]]; then
-    chezmoi apply
-    echo -e "${GREEN}✅ 配置文件应用完成${NC}"
-else
-    echo -e "${YELLOW}跳过配置应用${NC}"
-fi
-
+print_section "Shell 环境" "🐚"
+print_step "3" "$TOTAL_STEPS" "Oh My Zsh 及插件"
 echo ""
 
-# ============================================
-# 步骤 5: 安装 Oh My Zsh 及插件
-# ============================================
-echo -e "${YELLOW}🔌 步骤 4/5: 安装 Oh My Zsh 及插件...${NC}"
-echo -e "${BLUE}这将安装以下组件:${NC}"
-echo -e "  - Oh My Zsh (框架)"
-echo -e "  - zsh-autosuggestions (命令自动建议)"
-echo -e "  - zsh-syntax-highlighting (语法高亮)"
-echo -e "  - powerlevel10k (主题)"
+echo "  将要安装的组件:"
+print_list "Oh My Zsh - Zsh 配置框架"
+print_list "zsh-autosuggestions - 命令自动建议"
+print_list "zsh-syntax-highlighting - 语法高亮"
+print_list "powerlevel10k - 高性能主题"
 echo ""
-read -p "$(echo -e ${YELLOW}是否安装? [Y/n]: ${NC})" -n 1 -r
-echo ""
-if [[ ! $REPLY =~ ^[Nn]$ ]]; then
+
+if confirm "是否安装 Oh My Zsh"; then
     bash "$SCRIPT_DIR/install-oh-my-zsh-plugins.sh"
+else
+    print_warning "已跳过 Oh My Zsh 安装"
 fi
 
 echo ""
 
 # ============================================
-# 额外选项 1: 安装 Homebrew 软件包
+# 步骤 4: 安装 Homebrew 软件包
 # ============================================
-echo -e "${YELLOW}🍺 额外选项 1: 安装 Homebrew 软件包?${NC}"
-echo -e "${BLUE}这将安装 Brewfile 中定义的所有软件包${NC}"
-read -p "$(echo -e ${YELLOW}是否安装? [y/N]: ${NC})" -n 1 -r
+print_section "开发工具" "🛠"
+print_step "4" "$TOTAL_STEPS" "Homebrew 软件包"
 echo ""
-if [[ $REPLY =~ ^[Yy]$ ]]; then
+
+echo "  将要安装的内容:"
+print_list "Brewfile 中的所有软件包"
+print_list "包括 Git、Go、Neovim、fzf、ripgrep 等开发工具"
+echo ""
+print_warning "预计耗时: ~7 分钟 (取决于网络速度和软件包数量)"
+echo ""
+
+if confirm "是否安装软件包"; then
     bash "$SCRIPT_DIR/install-packages.sh"
+else
+    print_warning "已跳过软件包安装"
 fi
 
 echo ""
 
 # ============================================
-# 额外选项 2: 安装全局 pnpm 包
+# 步骤 5: 配置 NVM 和 Node.js
 # ============================================
-echo -e "${YELLOW}📦 额���选项 2: 安装全局 pnpm 包?${NC}"
-echo -e "${BLUE}这将安装 Pnpmfile 中定义的所有全局包${NC}"
-echo -e "${BLUE}需要先安装 NVM 和 Node.js${NC}"
-read -p "$(echo -e ${YELLOW}是否安装? [y/N]: ${NC})" -n 1 -r
+print_section "Node.js 生态" ""
+print_step "5" "$TOTAL_STEPS" "NVM + Node.js + pnpm"
 echo ""
-if [[ $REPLY =~ ^[Yy]$ ]]; then
-    # 检查 Node.js 和 pnpm 是否可用
-    if command -v node &> /dev/null && command -v pnpm &> /dev/null; then
-        echo -e "${GREEN}✅ Node.js 和 pnpm 已安装${NC}"
-        bash "$SCRIPT_DIR/install-pnpm-global.sh"
+
+echo "  将要配置的内容:"
+print_list "NVM - Node.js 版本管理器 (通过 Homebrew)"
+print_list "Node.js - 最新 LTS 版本"
+print_list "pnpm - 快速的包管理器"
+print_list "全局 pnpm 包 (Pnpmfile)"
+echo ""
+
+if confirm "是否配置 Node.js 环境"; then
+    # 设置 NVM 目录
+    export NVM_DIR="$HOME/.nvm"
+
+    # 加载 NVM
+    if [[ -s "$(brew --prefix nvm)/nvm.sh" ]]; then
+        print_info "加载 NVM..."
+        source "$(brew --prefix nvm)/nvm.sh"
+        print_success "NVM 已加载"
+    elif [[ -s "$NVM_DIR/nvm.sh" ]]; then
+        print_info "加载 NVM..."
+        [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+        print_success "NVM 已加载"
     else
-        echo -e "${RED}❌ 错误: Node.js 或 pnpm 未安装${NC}"
-        echo -e "${YELLOW}请先安装 Homebrew 软件包（包含 NVM）${NC}"
+        print_error "NVM 未找到"
+        print_warning "请确保已在步骤 4 中安装 Homebrew 软件包"
+        exit 1
     fi
+
+    echo ""
+
+    # 安装 Node.js
+    if ! command -v node &> /dev/null; then
+        print_info "安装 Node.js LTS..."
+        nvm install --lts
+        nvm use --lts
+        nvm alias default lts/*
+        print_success "Node.js 安装完成: ${BOLD}$(node -v)${NC}"
+    else
+        print_success "Node.js 已安装: ${BOLD}$(node -v)${NC}"
+    fi
+
+    echo ""
+
+    # 安装 pnpm 和全局包
+    bash "$SCRIPT_DIR/install-pnpm-global.sh"
+else
+    print_warning "已跳过 Node.js 配置"
 fi
 
 echo ""
 
 # ============================================
-# 完成
+# 步骤 6: 应用配置文件
 # ============================================
-echo -e "${GREEN}========================================${NC}"
-echo -e "${GREEN}   🎉 安装完成！${NC}"
-echo -e "${GREEN}========================================${NC}"
+print_section "配置应用" "⚙"
+print_step "6" "$TOTAL_STEPS" "应用 Chezmoi 配置"
 echo ""
-echo -e "${YELLOW}下一步操作:${NC}"
-echo -e "  ${GREEN}1.${NC} 重新加载 Shell: ${YELLOW}exec zsh${NC}"
-echo -e "  ${GREEN}2.${NC} 或运行: ${YELLOW}source ~/.zshrc${NC}"
+
+echo "  将要覆盖的文件:"
+print_list "~/.zshrc - Zsh 配置"
+print_list "~/.gitconfig - Git 配置"
+print_list "~/.zprofile - Shell 环境配置"
+print_list "~/.p10k.zsh - Powerlevel10k 主题配置"
+print_list "~/.condarc - Conda 配置"
+echo ""
+
+if confirm "是否应用配置文件"; then
+    chezmoi apply
+    print_success "配置文件应用完成"
+else
+    print_warning "已跳过配置应用"
+fi
+
+echo ""
+
+# ============================================
+# 安装完成
+# ============================================
+echo -e "${GREEN}╔════════════════════════════════════════════════════════════════╗${NC}"
+echo -e "${GREEN}║${NC} ${BOLD}                        安装完成！                              ${NC}${GREEN}║${NC}"
+echo -e "${GREEN}╠════════════════════════════════════════════════════════════════╣${NC}"
+echo -e "${GREEN}║${NC} ${BOLD}🎉 所有组件已成功安装                                        ${NC}${GREEN}║${NC}"
+echo -e "${GREEN}╚════════════════════════════════════════════════════════════════╝${NC}"
+echo ""
+
+echo -e "${BOLD}${CYAN}下一步操作:${NC}"
+echo ""
+print_list "${GREEN}重新加载 Shell${NC} → 运行: ${BOLD}exec zsh${NC}"
+print_list "${GREEN}或重新加载配置${NC} → 运行: ${BOLD}source ~/.zshrc${NC}"
 echo ""

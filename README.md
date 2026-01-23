@@ -6,12 +6,23 @@
 
 ## Quick Start
 
-### 方法一：一键安装
+### 方法一：一键安装（推荐）
 
 ```bash
 # 下载并运行安装脚本
 bash scripts/setup.sh
 ```
+
+安装向导将引导您完成以下步骤：
+
+| 步骤 | 内容 | 说明 |
+|------|------|------|
+| 1/6 | Homebrew | 包管理器 |
+| 2/6 | Chezmoi | 配置管理工具 |
+| 3/6 | Oh My Zsh | Shell 框架及插件 |
+| 4/6 | 软件包 | 开发工具和实用程序 |
+| 5/6 | Node.js | NVM + Node.js LTS + pnpm |
+| 6/6 | 配置应用 | 应用所有 dotfiles 配置 |
 
 ### 方法二：手动安装
 
@@ -67,8 +78,9 @@ dot-files/
 │   ├── extensions/                 # 浏览器扩展列表
 │   └── else/                       # 常用软件下载地址
 ├── scripts/                        # 脚本目录
-│   ├── setup.sh                    # 快速设置脚本
-│   ├── install-packages.sh         # 统一包安装脚本（支持 macOS 和 Linux）
+│   ├── setup.sh                    # 一键安装向导
+│   ├── install-packages.sh         # Homebrew 包安装
+│   ├── install-pnpm-global.sh      # 全局 pnpm 包安装
 │   └── install-oh-my-zsh-plugins.sh # Oh My Zsh 及插件安装
 └── README.md                       # 本文档
 ```
