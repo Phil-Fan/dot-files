@@ -1,0 +1,11 @@
+# Pnpmfile - 全局 pnpm 包清单
+# 使用方法: pnpm add -g <package>
+
+# ===== AI 工具 =====
+@anthropic-ai/claude-code  # Anthropic Claude Code CLI
+codex                      # 代码片段管理工具
+
+# ===== 可以添加其他全局包 =====
+# typescript
+# tsx
+# pnpm exec <binary>

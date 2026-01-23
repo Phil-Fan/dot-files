@@ -1,6 +1,6 @@
 # 包管理系统
 
-使用 Homebrew 统一管理 macOS 和 Linux 软件包。
+使用 Homebrew 统一管理 macOS 和 Linux 软件包，使用 pnpm 管理全局 Node.js 包。
 
 ## 文件结构
 
@@ -9,6 +9,7 @@ softwares/packages/
 ├── Brewfile          # macOS Homebrew 包清单
 ├── Brewfile-linux    # Linux Homebrew 包清单
 ├── Brewfile.dev      # 开发环境额外包清单
+├── Pnpmfile          # 全局 pnpm 包清单
 └── README.md         # 本文档
 ```
 
@@ -17,11 +18,16 @@ softwares/packages/
 ### 使用统一脚本（推荐）
 
 ```bash
-# 自动检测平台并安装对应的软件包
+# 安装 Homebrew 包
 ~/.local/share/chezmoi/scripts/install-packages.sh
+
+# 安装全局 pnpm 包
+~/.local/share/chezmoi/scripts/install-pnpm-global.sh
 ```
 
 ### 手动安装
+
+**Homebrew 包**:
 
 **macOS**:
 ```bash
@@ -40,11 +46,24 @@ brew bundle --file=softwares/packages/Brewfile-linux
 brew install git fzf tmux
 ```
 
+**全局 pnpm 包**:
+```bash
+# 使用脚本安装（推荐）
+~/.local/share/chezmoi/scripts/install-pnpm-global.sh
+
+# 手动安装
+pnpm add -g @anthropic-ai/claude-code codex
+```
+
 ## 包分类
 
 ### 开发工具
-- Git, GitHub CLI, Go, Node.js, Ruby
-- 版本管理器: fnm, rbenv, jenv
+- Git, GitHub CLI, Go, Node.js (NVM), Ruby
+- 版本管理器: NVM, rbenv, jenv
+
+### AI 工具 (通过 pnpm 管理)
+- @anthropic-ai/claude-code
+- codex
 
 ### 命令行工具
 - fzf (模糊查找)
@@ -86,6 +105,9 @@ chezmoi edit ~/.local/share/chezmoi/softwares/packages/Brewfile-linux
 
 # 开发环境额外包: 编辑 Brewfile.dev
 chezmoi edit ~/.local/share/chezmoi/softwares/packages/Brewfile.dev
+
+# 全局 pnpm 包: 编辑 Pnpmfile
+chezmoi edit ~/.local/share/chezmoi/softwares/packages/Pnpmfile
 ```
 
 ## 维护
@@ -94,6 +116,7 @@ chezmoi edit ~/.local/share/chezmoi/softwares/packages/Brewfile.dev
 
 定期检查并更新软件包：
 
+**Homebrew 包**:
 ```bash
 # macOS: 重新生成 Brewfile
 brew bundle dump --file=~/.local/share/chezmoi/softwares/packages/Brewfile --force
@@ -102,12 +125,24 @@ brew bundle dump --file=~/.local/share/chezmoi/softwares/packages/Brewfile --for
 brew bundle dump --file=~/.local/share/chezmoi/softwares/packages/Brewfile-linux --force
 ```
 
+**全局 pnpm 包**:
+```bash
+# 查看已安装的全局包
+pnpm list -g --depth=0
+
+# 手动更新 Pnpmfile（将包名添加到文件中）
+chezmoi edit ~/.local/share/chezmoi/softwares/packages/Pnpmfile
+```
+
 ### 清理不需要的包
 
 ```bash
-# macOS 和 Linux 通用
+# Homebrew 包清理
 brew cleanup
 brew autoremove
+
+# pnpm 全局包清理
+pnpm remove -g <package>
 ```
 
 ## 最佳实践

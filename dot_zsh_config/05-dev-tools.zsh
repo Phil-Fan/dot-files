@@ -1,20 +1,8 @@
 # 开发工具版本管理模块
 # 文件: ~/.zsh_config/05-dev-tools.zsh
 
-# ========== Node.js 版本管理 ==========
-
-# fnm (Fast Node Manager)
-if [[ "$OSTYPE" == darwin* ]]; then
-    FNM_PATH="/opt/homebrew/opt/fnm/bin"
-    if [ -d "$FNM_PATH" ]; then
-        eval "$(fnm env)"
-    fi
-elif [[ "$OSTYPE" == linux* ]]; then
-    if [ -d "$HOME/.fnm" ]; then
-        export PATH="$HOME/.fnm:$PATH"
-        eval "$(fnm env)"
-    fi
-fi
+# ========== Node.js 版本管理 (NVM) ==========
+# NVM 配置和 pnpm 自动安装已在 ~/.zprofile 中处理
 
 # Bun (JavaScript 运行时)
 if [ -d "$HOME/.bun" ]; then
