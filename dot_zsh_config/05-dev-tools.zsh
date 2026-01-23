@@ -26,8 +26,9 @@ case "$(uname)" in
         ;;
 esac
 
-# 添加 pnpm bin 目录到 PATH
-export PATH="$PNPM_HOME/bin:$PATH"
+# 添加 pnpm 全局二进制目录到 PATH
+# pnpm 期望 PNPM_HOME 本身就是全局 bin 目录
+export PATH="$PNPM_HOME:$PATH"
 
 # Bun (JavaScript 运行时)
 if [ -d "$HOME/.bun" ]; then

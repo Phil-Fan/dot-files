@@ -28,7 +28,14 @@ fi
 # 确保 PNPM_HOME 环境变量设置正确
 if [[ -z "$PNPM_HOME" ]]; then
     echo -e "${YELLOW}设置 PNPM_HOME 环境变量...${NC}"
-    export PNPM_HOME="$HOME/Library/pnpm"
+    case "$(uname)" in
+        Darwin)
+            export PNPM_HOME="$HOME/Library/pnpm"
+            ;;
+        *)
+            export PNPM_HOME="$HOME/.local/share/pnpm"
+            ;;
+    esac
     export PATH="$PNPM_HOME:$PATH"
 fi
 echo ""
