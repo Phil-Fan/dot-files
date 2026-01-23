@@ -36,9 +36,12 @@ if [[ -z "$PNPM_HOME" ]]; then
             export PNPM_HOME="$HOME/.local/share/pnpm"
             ;;
     esac
-    export PATH="$PNPM_HOME:$PATH"
+    export PATH="$PNPM_HOME/bin:$PATH"
 fi
 echo ""
+
+# 确保 pnpm 全局 bin 目录配置一致
+pnpm config set global-bin-dir "$PNPM_HOME/bin"
 
 # 获取脚本目录
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
