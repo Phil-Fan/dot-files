@@ -2,7 +2,34 @@
 # 文件: ~/.zsh_config/05-dev-tools.zsh
 
 # ========== Node.js 版本管理 (NVM) ==========
-# NVM 配置和 pnpm 自动安装已在 ~/.zprofile 中处理
+# NVM 通过 Homebrew 管理
+export NVM_DIR="$HOME/.nvm"
+
+# 优先使用 Homebrew 安装的 NVM
+if [[ -s "$(brew --prefix nvm)/nvm.sh" ]]; then
+    source "$(brew --prefix nvm)/nvm.sh"
+# 兼容手动安装的 NVM
+elif [[ -s "$NVM_DIR/nvm.sh" ]]; then
+    source "$NVM_DIR/nvm.sh"
+fi
+
+# ========== pnpm 包管理器 ==========
+# 设置 PNPM_HOME（全局二进制文件存放路径）
+case "$(uname)" in
+    Darwin)
+        # macOS
+        export PNPM_HOME="$HOME/Library/pnpm"
+        ;;
+    *)
+        # Linux
+        export PNPM_HOME="$HOME/.local/share/pnpm"
+        ;;
+esac
+
+# 添加到 PATH（如果目录存在）
+if [[ -d "$PNPM_HOME" ]]; then
+    export PATH="$PNPM_HOME:$PATH"
+fi
 
 # Bun (JavaScript 运行时)
 if [ -d "$HOME/.bun" ]; then
