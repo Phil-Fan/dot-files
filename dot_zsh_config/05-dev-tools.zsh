@@ -27,9 +27,7 @@ case "$(uname)" in
 esac
 
 # 添加 pnpm bin 目录到 PATH
-if [[ -d "$PNPM_HOME/bin" ]]; then
-    export PATH="$PNPM_HOME/bin:$PATH"
-fi
+export PATH="$PNPM_HOME/bin:$PATH"
 
 # Bun (JavaScript 运行时)
 if [ -d "$HOME/.bun" ]; then
