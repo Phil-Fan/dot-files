@@ -119,23 +119,21 @@ if ! command -v brew &> /dev/null; then
 
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
-    print_info "配置 Homebrew 环境变量..."
+    print_info "配置 Homebrew 环境变量（当前会话）..."
 
+    # 仅在当前 shell 中加载，后续由 dotfiles 管理
     if [[ "$OS" == "Darwin" ]]; then
         if [[ "$ARCH" == 'arm64' ]]; then
-            echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> ~/.zprofile
             eval "$(/opt/homebrew/bin/brew shellenv)"
         else
-            echo 'eval "$(/usr/local/bin/brew shellenv)"' >> ~/.zprofile
             eval "$(/usr/local/bin/brew shellenv)"
         fi
     else
-        HOMEBREW_PREFIX="/home/linuxbrew/.linuxbrew"
-        echo "eval \"\$($HOMEBREW_PREFIX/bin/brew shellenv)\"" >> ~/.zprofile
-        eval "$($HOMEBREW_PREFIX/bin/brew shellenv)"
+        eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
     fi
 
     print_success "Homebrew 安装完成"
+    print_info "环境变量将在 'chezmoi apply' 后永久生效"
 else
     print_success "Homebrew 已安装: ${BOLD}$(brew --version | head -n1)${NC}"
 fi
