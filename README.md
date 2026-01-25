@@ -29,6 +29,8 @@ bash scripts/setup.sh
 适用于 macOS (Apple Silicon/Intel) 和 Linux：
 
 ```bash
+export https_proxy=http://127.0.0.1:7890 http_proxy=http://127.0.0.1:7890 all_proxy=http://127.0.0.1:7890
+
 # 1. 安装 Homebrew
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
