@@ -67,6 +67,7 @@ dot-files/
 ├── dot_zprofile.tmpl               # Zsh Profile
 ├── dot_p10k.zsh                    # Powerlevel10k 配置
 ├── dot_gitconfig.tmpl              # Git 配置模板
+├── dot_tmux.conf                   # Tmux 终端复用器配置
 ├── dot_condarc                     # Conda 配置
 ├── softwares/                      # 软件配置目录
 │   ├── packages/                   # 包管理目录
