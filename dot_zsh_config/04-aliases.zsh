@@ -15,6 +15,12 @@ alias vi='nvim'
 alias v='nvim'
 alias lg='lazygit'
 
+# ========== Git 别名 ==========
+alias g="git"
+alias gs="git status"
+alias ga="git add"
+alias gc="git commit -m"
+
 # ========== 导航别名 ==========
 alias ..="cd .."
 alias ...="cd ../.."
