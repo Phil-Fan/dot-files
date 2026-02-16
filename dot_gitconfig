@@ -3,3 +3,47 @@
 	email = hw.phil.fan@gmail.com
 [credential]
 	helper = store
+[ui "color"]
+	ui = always
+[color]
+	ui = true
+[core]
+	autocrlf = input
+	safecrlf = true
+[merge]
+	tool = nvim -d
+[alias]
+	c = commit
+	s = status
+	st = status
+	lg = log --oneline
+	last = log -1 HEAD
+	tree = log --all --graph --decorate
+	p = push --force-with-lease
+	# https://stackoverflow.com/a/11688523/472927
+	# 查找提交信息包含该关键字的 stash 并显示其 diff
+	ss = "!f() { git stash show stash^{/$*} -p; }; f"
+	# 查找提交信息包含该关键字的 stash 并应用它
+	sa = "!f() { git stash apply stash^{/$*}; }; f"
+	sl = stash list
+[pull]
+	ff = only
+[push]
+	default = simple
+[help]
+	# https://blog.gitbutler.com/why-is-git-autocorrect-too-fast-for-formula-one-drivers/
+	autocorrect = prompt
+[github]
+	user = Phil-Fan
+[diff]
+	algorithm = histogram
+	indentHeuristic = true
+[protocol]
+	version = 2
+[init]
+	defaultBranch = main
+[filter "lfs"]
+	required = true
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
