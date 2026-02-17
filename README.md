@@ -13,6 +13,14 @@
 bash scripts/setup.sh
 ```
 
+### CI 验证安装（无交互）
+
+```bash
+bash scripts/install-verify.sh
+```
+
+该脚本会在隔离的临时 `HOME` 中执行 `chezmoi init/apply`，并校验关键配置文件是否生成、忽略目录是否生效，适合本地和 CI 自动验证。
+
 安装向导将引导您完成以下步骤：
 
 | 步骤 | 内容 | 说明 |
