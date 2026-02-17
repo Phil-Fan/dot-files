@@ -11,16 +11,21 @@
 	autocrlf = input
 	safecrlf = true
 [merge]
-	tool = nvim -d
+	tool = nvimdiff
+[mergetool]
+	prompt = false
+	keepBackup = false
 [alias]
 	c = commit
 	s = status
+	b = branch
+	a = add
+	ck = checkout
+	r = restore
 	st = status
 	lg = log --oneline
 	last = log -1 HEAD
-	tree = log --all --graph --decorate
-	p = push --force-with-lease
-	# https://stackoverflow.com/a/11688523/472927
+	graph = log --all --graph --decorate
 	# 查找提交信息包含该关键字的 stash 并显示其 diff
 	ss = "!f() { git stash show stash^{/$*} -p; }; f"
 	# 查找提交信息包含该关键字的 stash 并应用它
@@ -38,8 +43,6 @@
 [diff]
 	algorithm = histogram
 	indentHeuristic = true
-[protocol]
-	version = 2
 [init]
 	defaultBranch = main
 [filter "lfs"]
