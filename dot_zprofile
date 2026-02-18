@@ -1,16 +1,11 @@
-# Homebrew
-if [[ -d /opt/homebrew ]]; then
+# Homebrew 必须最先进入 PATH
+if [[ -x "/opt/homebrew/bin/brew" ]]; then
     # macOS Apple Silicon
     eval "$(/opt/homebrew/bin/brew shellenv)"
-elif [[ -d /usr/local/bin/brew ]]; then
+elif [[ -x "/usr/local/bin/brew" ]]; then
     # macOS Intel
     eval "$(/usr/local/bin/brew shellenv)"
-elif [[ -d /home/linuxbrew/.linuxbrew ]]; then
+elif [[ -x "/home/linuxbrew/.linuxbrew/bin/brew" ]]; then
     # Linux
     eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 fi
-
-# NVM (通过 Homebrew 安装)
-export NVM_DIR="$HOME/.nvm"
-[ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
-[ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion

@@ -19,8 +19,7 @@ export MANPAGER="sh -c 'col -bx | bat -l man -p'"
 # ============ fzf (Fuzzy Finder) 配置 ============
 export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
 
-# ============ Autojump 智能目录跳转 ============
-[[ -s $HOME/.autojump/etc/profile.d/autojump.sh ]] && source $HOME/.autojump/etc/profile.d/autojump.sh
+# Autojump 由 Oh My Zsh 插件统一初始化，避免重复注入 PATH
 
 # ============ Yazi 终端文件管理器 ============
 # Yazi shell wrapper - 支持 CD 切换功能

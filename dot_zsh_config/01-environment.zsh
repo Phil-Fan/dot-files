@@ -2,24 +2,35 @@
 # 文件: ~/.zsh_config/01-environment.zsh
 
 # ============================================
-# Homebrew 配置
+# PATH 去重与排序工具
 # ============================================
-# macOS Apple Silicon
-if [[ -d "/opt/homebrew" ]]; then
-    eval "$(/opt/homebrew/bin/brew shellenv)"
-# macOS Intel
-elif [[ -d "/usr/local/bin/brew" ]]; then
-    eval "$(/usr/local/bin/brew shellenv)"
-# Linux Homebrew
-elif [[ -d "/home/linuxbrew/.linuxbrew" ]]; then
-    eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-fi
+# path 数组会自动去重，保留最先出现的目录
+typeset -gU path PATH
+
+path_prepend() {
+    local -a new_dirs
+    local dir
+
+    for dir in "$@"; do
+        [[ -d "$dir" ]] && new_dirs+=("$dir")
+    done
+
+    (( ${#new_dirs[@]} )) && path=("${new_dirs[@]}" "${path[@]}")
+}
+
+path_append() {
+    local dir
+
+    for dir in "$@"; do
+        [[ -d "$dir" ]] && path+=("$dir")
+    done
+}
 
 # 用户信息
 export DEFAULT_USER="$(whoami)"
 
-# 通用 PATH
-export PATH="$HOME/.local/bin:$PATH"
+# 用户工具路径放后面，避免覆盖语言管理器与系统工具
+path_append "$HOME/.local/bin"
 
 # 默认编辑器（后续会被 neovim 覆盖）
 export EDITOR="${EDITOR:-vi}"

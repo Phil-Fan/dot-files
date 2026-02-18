@@ -2,51 +2,54 @@
 # 文件: ~/.zsh_config/05-dev-tools.zsh
 
 # ========== Node.js 版本管理 (NVM) ==========
-# NVM 通过 Homebrew 管理
 export NVM_DIR="$HOME/.nvm"
 
-# 优先使用 Homebrew 安装的 NVM
-if [[ -s "$(brew --prefix nvm)/nvm.sh" ]]; then
-    source "$(brew --prefix nvm)/nvm.sh"
-# 兼容手动安装的 NVM
+# 优先使用 Homebrew 安装的 NVM，回退到手动安装路径
+if [[ -n "$HOMEBREW_PREFIX" ]] && [[ -s "$HOMEBREW_PREFIX/opt/nvm/nvm.sh" ]]; then
+    source "$HOMEBREW_PREFIX/opt/nvm/nvm.sh"
 elif [[ -s "$NVM_DIR/nvm.sh" ]]; then
     source "$NVM_DIR/nvm.sh"
 fi
 
-# ========== pnpm 包管理器 ==========
-# 设置 PNPM_HOME（全局二进制文件存放路径）
-case "$(uname)" in
-    Darwin)
-        # macOS
-        export PNPM_HOME="$HOME/Library/pnpm"
-        ;;
-    *)
-        # Linux
-        export PNPM_HOME="$HOME/.local/share/pnpm"
-        ;;
-esac
-
-# 添加 pnpm 全局二进制目录到 PATH（幂等，避免重复添加）
-case ":$PATH:" in
-    *":$PNPM_HOME:"*) ;;
-    *) export PATH="$PNPM_HOME:$PATH" ;;
-esac
+if [[ -n "$HOMEBREW_PREFIX" ]] && [[ -s "$HOMEBREW_PREFIX/opt/nvm/etc/bash_completion.d/nvm" ]]; then
+    source "$HOMEBREW_PREFIX/opt/nvm/etc/bash_completion.d/nvm"
+fi
 
 # Bun (JavaScript 运行时)
 if [ -d "$HOME/.bun" ]; then
     export BUN_INSTALL="$HOME/.bun"
-    export PATH="$BUN_INSTALL/bin:$PATH"
+    path_prepend "$BUN_INSTALL/bin"
     [ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
 fi
 
 # ========== Ruby 版本管理 (rbenv) ==========
 if [ -d "$HOME/.rbenv" ]; then
-    export PATH="$HOME/.rbenv/shims:$PATH"
+    export RBENV_ROOT="$HOME/.rbenv"
+    path_prepend "$RBENV_ROOT/bin"
     eval "$(rbenv init - zsh)"
 fi
 
 # ========== Java 版本管理 (jenv) ==========
 if [ -d "$HOME/.jenv" ]; then
-    export PATH="$HOME/.jenv/bin:$PATH"
+    export JENV_ROOT="$HOME/.jenv"
+    path_prepend "$JENV_ROOT/bin"
     eval "$(jenv init -)"
+fi
+
+# ========== pnpm 包管理器 ==========
+case "$(uname)" in
+    Darwin)
+        export PNPM_HOME="$HOME/Library/pnpm"
+        ;;
+    *)
+        export PNPM_HOME="$HOME/.local/share/pnpm"
+        ;;
+esac
+
+# 用户工具路径统一放后面，避免抢占语言管理器优先级
+path_append "$PNPM_HOME"
+
+# 统一收敛优先级：Homebrew 最前，语言管理器次之，用户工具最后
+if [[ -n "$HOMEBREW_PREFIX" ]]; then
+    path_prepend "$HOMEBREW_PREFIX/bin" "$HOMEBREW_PREFIX/sbin"
 fi
