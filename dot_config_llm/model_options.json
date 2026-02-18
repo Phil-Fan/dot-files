@@ -1,0 +1,6 @@
+{
+  "openai/gpt-oss-120b": {
+    "max_tokens": "10000",
+    "reasoning_effort": "low"
+  }
+}

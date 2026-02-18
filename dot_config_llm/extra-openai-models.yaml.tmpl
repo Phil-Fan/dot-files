@@ -1,0 +1,12 @@
+{{- $apiBase := env "LLM_GPTOSS_API_BASE" -}}
+- model_id: openai/gpt-oss-120b
+  model_name: openai/gpt-oss-120b
+  aliases: [gptoss120b]
+  api_key_name: cqtest
+  reasoning: true
+{{- if $apiBase }}
+  api_base: {{ $apiBase | quote }}
+{{- else }}
+  # Set endpoint locally before `chezmoi apply`:
+  # export LLM_GPTOSS_API_BASE="https://your-endpoint/v1"
+{{- end }}
