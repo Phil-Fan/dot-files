@@ -29,6 +29,15 @@ brew "tmux"            # 终端复用器
 brew "thefuck"         # 命令纠错工具
 brew "autocorrect"     # 自动纠错
 brew "ast-grep"        # AST 代码搜索和替换
+brew "cloudflare-wrangler"  # Cloudflare Workers CLI
+brew "llm"             # LLM 命令行工具
+brew "tldr"            # 命令行简明帮助
+brew "opencode"        # OpenCode CLI
+brew "just"            # 命令任务自动化
+brew "pre-commit"      # Git pre-commit 框架
+brew "markdownlint-cli2"  # Markdown lint + 自动修复
+brew "shellcheck"      # Shell 脚本静态检查
+brew "shfmt"           # Shell 脚本格式化
 
 # ===== 编辑器 =====
 brew "neovim"          # 现代化 Vim 编辑器
@@ -44,6 +53,7 @@ brew "uv"              # Python 包管理器
 brew "pandoc"          # 文档转换工具
 brew "ffmpeg"          # 视频处理
 brew "poppler"         # PDF 处理库
+brew "librsvg"         # SVG 渲染库
 brew "resvg"           # SVG 渲染工具
 brew "imagemagick"     # 图像处理工具
 cask "font-symbols-only-nerd-font"  # 符号 Nerd Font

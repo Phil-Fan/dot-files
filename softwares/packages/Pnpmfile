@@ -5,8 +5,15 @@
 @anthropic-ai/claude-code  # Anthropic Claude Code CLI
 @openai/codex              # OpenAI Codex CLI
 opencode-ai                # OpenCode AI CLI
+oh-my-codex               # Oh My Codex CLI
+xmindmark                 # XmindMark CLI
+happy-coder               # Happy Coder CLI
 
 # ===== 可以添加其他全局包 =====
 # typescript
 # tsx
 # pnpm exec <binary>
+
+# ===== 开发工具 =====
+markdownlint              # Markdown lint CLI
+pre-commit                # pre-commit CLI (npm)
