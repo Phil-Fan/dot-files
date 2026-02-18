@@ -21,6 +21,22 @@ bash scripts/install-verify.sh
 
 该脚本会在隔离的临时 `HOME` 中执行 `chezmoi init/apply`，并校验关键配置文件是否生成、忽略目录是否生效，适合本地和 CI 自动验证。
 
+### Lint 与 pre-commit（just 自动化）
+
+```bash
+# 安装 pre-commit hook（首次执行）
+just pre-commit-install
+
+# 运行全部 lint 检查
+just lint
+
+# 自动修复 Markdown 与 Shell 格式
+just fix
+
+# 用 pre-commit 按 hook 全量执行
+just pre-commit-run
+```
+
 安装向导将引导您完成以下步骤：
 
 | 步骤 | 内容 | 说明 |
@@ -153,5 +169,5 @@ chezmoi diff
 ---
 
 **作者**: PhilFan  
-**仓库**: https://github.com/Phil-Fan/dot-files
+**仓库**: <https://github.com/Phil-Fan/dot-files>
 **Lisence**: MIT
