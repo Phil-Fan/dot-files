@@ -1,0 +1,2 @@
+[plugin]
+deps = [{ use = "Lil-Dank/lazygit", rev = "main" }]
