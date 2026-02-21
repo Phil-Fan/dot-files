@@ -37,12 +37,14 @@ bash scripts/setup.sh
 **Homebrew 包**:
 
 **macOS/Linux** (使用通用 Brewfile):
+
 ```bash
 cd ~/.local/share/chezmoi
 brew bundle --file=softwares/packages/Brewfile
 ```
 
 **单个安装**:
+
 ```bash
 # NVM 现在通过 Homebrew 管理
 brew install nvm
@@ -52,6 +54,7 @@ brew install git fzf tmux
 ```
 
 **全局 pnpm 包**:
+
 ```bash
 # 使用脚本安装（推荐）
 ~/.local/share/chezmoi/scripts/install-pnpm-global.sh
@@ -63,15 +66,18 @@ pnpm add -g @anthropic-ai/claude-code codex opencode-ai
 ## 包分类
 
 ### 开发工具
+
 - Git, GitHub CLI, Go, Ruby, Mercurial
 - 版本管理器: NVM (通过 Homebrew), rbenv, jenv
 
 ### AI 工具 (通过 pnpm 全局包管理)
+
 - @anthropic-ai/claude-code - Anthropic Claude Code CLI
 - @openai/codex - OpenAI Codex CLI
 - opencode-ai - OpenCode AI CLI
 
 ### 命令行工具
+
 - fzf (模糊查找)
 - fd (更好的 find)
 - ripgrep (更好的 grep)
@@ -80,21 +86,25 @@ pnpm add -g @anthropic-ai/claude-code codex opencode-ai
 - autojump (智能跳转)
 
 ### 系统工具
+
 - htop/btop (系统监控)
 - neofetch (系统信息)
 - build-essential (编译工具)
 
 ### 网络工具
+
 - curl, wget, nmap
 - net-tools, iputils-ping
 
 ### 特定平台
 
 #### macOS 独有
+
 - 移动开发: cocoapods, carthage, fvm, xcodegen
 - GUI 应用: DevToys, MacTeX, OpenInTerminal
 
 #### Linux 独有
+
 - 终端文件管理器: yazi
 - 额外工具: jq, sevenzip, poppler, resvg, imagemagick
 
@@ -123,6 +133,7 @@ chezmoi edit ~/.local/share/chezmoi/softwares/packages/Pnpmfile
 定期检查并更新软件包：
 
 **Homebrew 包**:
+
 ```bash
 # macOS: 重新生成 Brewfile
 brew bundle dump --file=~/.local/share/chezmoi/softwares/packages/Brewfile --force
@@ -132,6 +143,7 @@ brew bundle dump --file=~/.local/share/chezmoi/softwares/packages/Brewfile-linux
 ```
 
 **全局 pnpm 包**:
+
 ```bash
 # 查看已安装的全局包
 pnpm list -g --depth=0

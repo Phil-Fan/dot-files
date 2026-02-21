@@ -14,7 +14,8 @@ brew "sevenzip"        # 7z 压缩工具
 # ===== 版本管理器 =====
 brew "rbenv"           # Ruby 版本管理
 brew "jenv"            # Java 版本管理
-brew "nvm"             # Node.js 版本管理
+brew "nvm"             # Node.js 
+brew "ni"              # Node.js 包管理器
 
 # ===== 命令行增强 =====
 brew "fzf"             # 模糊查找工具
@@ -33,11 +34,14 @@ brew "cloudflare-wrangler"  # Cloudflare Workers CLI
 brew "llm"             # LLM 命令行工具
 brew "tldr"            # 命令行简明帮助
 brew "opencode"        # OpenCode CLI
+
+# ===== Linter =====
 brew "just"            # 命令任务自动化
 brew "pre-commit"      # Git pre-commit 框架
 brew "markdownlint-cli2"  # Markdown lint + 自动修复
 brew "shellcheck"      # Shell 脚本静态检查
 brew "shfmt"           # Shell 脚本格式化
+brew "pyrefly"
 
 # ===== 编辑器 =====
 brew "neovim"          # 现代化 Vim 编辑器

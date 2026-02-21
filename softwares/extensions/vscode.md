@@ -1,6 +1,7 @@
-## VS Code 插件
+# VS Code 插件
 
-### 基础功能
+## 基础功能
+
 - **Chinese** - 中文语言包
 - **Error Lens** - 错误提示内联显示
 - **Path Intellisense** - 路径自动补全
@@ -10,19 +11,19 @@
 - **Doxygen Documentation Generator** - 注释生成
 - **Hungry Delete** - 智能删除
 
-### 开发功能
+## 开发功能
+
 - **Jupyter** - Notebook 支持
 - **Remote - SSH** - 远程开发
 - **LaTeX Workshop** - LaTeX 编辑支持
 
+## project manager
 
-#### project manager
-
-#### copy as markdown
+## copy as markdown
 
 [chorme 下载地址](https://microsoftedge.microsoft.com/addons/detail/copy-as-markdown/cbbdkefgbfifiljnnklfhnhcnlmpglpd)
 
-#### markdown 插件
+## markdown 插件
 
 - Markdown Preview Enhanced
 - Markdown emoji
@@ -32,21 +33,10 @@
 
 截图之后直接按就可以将图片上传到图床，并将连接复制到剪贴板
 
-#### vim
+## vim
 
-#### 基础功能
+## jupyter
 
-- chinese
-- edit csv
-- error lens
-- path intellisense
-- image preview
-- Prettier: code formatter
-- doxygen documentation generator
-- hungry delete
+## Remote - SSH
 
-#### jupyter
-
-#### Remote - SSH
-
-#### latex workshop
+## latex workshop

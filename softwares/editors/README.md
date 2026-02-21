@@ -22,6 +22,7 @@ softwares/editors/
 ## 配置架构
 
 **基础配置 + 特定配置** 模式：
+
 - `settings.base.json` - VSCode/Cursor 共享配置
 - `{editor}/settings.json` - 编辑器特定设置
 

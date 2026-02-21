@@ -41,5 +41,6 @@
 ---
 
 **浏览器选择**:
+
 - Safari (主力浏览器)
 - [Edge](https://www.microsoft.com/zh-cn/edge/download) (备用浏览器)

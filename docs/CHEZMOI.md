@@ -17,6 +17,7 @@ Chezmoi 会将仓库中的所有文件应用到你的 home 目录 (`~`)。文件
 ### 问题
 
 按照这个规则，`scripts/` 和 `softwares/` 目录会被复制到 `~/scripts/` 和 `~/softwares/`，但这通常不是我们想要的：
+
 - 这些是参考文档和脚本
 - 它们应该保留在 dotfiles 仓库中
 - 不需要复制到用户的 home 目录
