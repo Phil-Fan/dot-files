@@ -47,7 +47,7 @@ case "$(uname)" in
 esac
 
 # 用户工具路径统一放后面，避免抢占语言管理器优先级
-path_append "$PNPM_HOME"
+path_append "$PNPM_HOME/bin"
 
 # 统一收敛优先级：Homebrew 最前，语言管理器次之，用户工具最后
 if [[ -n "$HOMEBREW_PREFIX" ]]; then
