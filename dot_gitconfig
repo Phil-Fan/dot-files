@@ -1,6 +1,3 @@
-[user]
-	name = Phil-Fan
-	email = hw.phil.fan@gmail.com
 [credential]
 	helper = store
 [ui "color"]

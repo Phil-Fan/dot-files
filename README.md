@@ -63,6 +63,7 @@ brew install chezmoi
 
 # 3. 初始化 dotfiles（会自动配置平台相关的 Homebrew 路径）
 chezmoi init https://github.com/Phil-Fan/dot-files.git
+zsh ~/.local/share/chezmoi/scripts/setup.sh
 chezmoi apply
 ```
 

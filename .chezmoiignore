@@ -23,6 +23,7 @@ LICENSE
 .github/
 
 # 规范文件
+docs/
 .editorconfig
 .eslintrc*
 .prettierrc*
