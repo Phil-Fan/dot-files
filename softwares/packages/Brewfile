@@ -10,6 +10,7 @@ brew "mercurial"       # Mercurial 版本控制
 brew "wget"            # 下载工具
 brew "jq"              # JSON 处理工具
 brew "sevenzip"        # 7z 压缩工具
+cask "cmux"            # 终端复用器
 
 # ===== 版本管理器 =====
 brew "rbenv"           # Ruby 版本管理

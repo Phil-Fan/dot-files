@@ -8,6 +8,7 @@ alias ll='eza -lh --git'
 alias la='eza -lha --git'
 alias grep='rg --smart-case'
 alias f='fd'
+alias ssh='cmux ssh'
 
 # ========== 编辑器别名 ==========
 alias vim='nvim'

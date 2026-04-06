@@ -38,3 +38,5 @@ export VISUAL="${VISUAL:-vi}"
 
 # llm CLI 配置目录统一放在 ~/.config/llm（由 dotfiles 管理非敏感配置）
 export LLM_USER_PATH="${LLM_USER_PATH:-$HOME/.config/llm}"
+
+export TERM="xterm-256color"
