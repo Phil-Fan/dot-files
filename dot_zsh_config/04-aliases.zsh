@@ -8,7 +8,7 @@ alias ll='eza -lh --git'
 alias la='eza -lha --git'
 alias grep='rg --smart-case'
 alias f='fd'
-alias ssh='cmux ssh'
+# alias ssh='cmux ssh'
 
 # ========== 编辑器别名 ==========
 alias vim='nvim'
@@ -161,28 +161,28 @@ function fork() {
 clonehw() {
   hw || return
   clone "$@" || return
-  cursor .
+  qoder .
   cd - > /dev/null
 }
 
 clonel() {
   lab || return
   clone "$@" || return
-  cursor .
+  qoder .
   cd - > /dev/null
 }
 
 clonei() {
   pj || return
   clone "$@" || return
-  cursor .
+  qoder .
   cd - > /dev/null
 }
 
 clonef() {
   fork || return
   clone "$@" || return
-  cursor .
+  qoder .
   cd - > /dev/null
 }
 
@@ -191,25 +191,25 @@ clonef() {
 
 chw() {
   hw "$1" || return
-  cursor .
+  qoder .
   cd - > /dev/null
 }
 
 clab() {
   lab "$1" || return
-  cursor .
+  qoder .
   cd - > /dev/null
 }
 
 cpj() {
   pj "$1" || return
-  cursor .
+  qoder .
   cd - > /dev/null
 }
 
 cfork() {
   fork "$1" || return
-  cursor .
+  qoder .
   cd - > /dev/null
 }
 
