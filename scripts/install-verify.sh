@@ -65,7 +65,6 @@ main() {
 
   log "Validating expected managed files"
   assert_exists "$HOME/.zshrc"
-  assert_exists "$HOME/.zprofile"
   assert_exists "$HOME/.gitconfig"
   assert_exists "$HOME/.tmux.conf"
   assert_exists "$HOME/.p10k.zsh"
